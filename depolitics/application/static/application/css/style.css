@@ -1,0 +1,280 @@
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    padding-bottom: 3rem;
+    min-height: 100%;
+    background-color: hsl(0, 0%, 10%);
+    color: hsl(0, 0%, 90%);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 18px;
+}
+
+h1, h2 {
+    font-weight: normal;    
+}
+
+h2 {
+    font-size: 14px;
+}
+
+p {
+    font-size: 18px;
+}
+
+a {
+    text-decoration: none;
+    color: hsl(0, 0%, 50%);
+}
+
+a:hover {
+    color: hsl(0, 0%, 100%);
+}
+
+nav {
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(0, 0%, 0%);
+}
+
+nav h1 {
+    margin: 0;
+    font-size: 16px;       
+}
+
+nav h1 a {
+    color: hsl(0, 0%, 90%);
+}
+
+
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: hsl(0, 0%, 0%);
+}
+
+footer:hover {
+    opacity: 1;
+}
+
+footer h1 {
+    font-size: 12px;
+}
+
+.container {
+    width: 70%;
+    margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+    .container {
+        width: 90%;
+    }
+}
+
+
+/*-------*/
+/* TABS */
+.tabs {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    user-select: none;
+}
+
+.tabs ul {
+    display: inline-flex;
+    list-style: none;
+    padding: 0;
+}
+
+.tabs ul li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    height: 40px;
+}
+
+.tabs ul li:hover {
+    cursor: pointer;
+    color: hsl(0, 0%, 100%);
+    -webkit-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+    -moz-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+    box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+}
+
+.active {
+     color: hsl(0, 0%, 100%);
+    -webkit-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+    -moz-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+    box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);   
+}
+
+
+/*-------*/
+/* CONTENT */
+
+.content {
+    font-size: 20px;
+    line-height: 1.6;
+}
+
+.content p {
+    margin-bottom: 30px;
+}
+
+.content-about {
+    text-align: justify;
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+@media (max-width: 1100px) {
+    .content-about {
+        margin-left: 0;
+        margin-right: 0%;
+    }
+}
+
+.call-to-action {
+    margin-top: 60px;
+    text-align: center;
+}
+
+.no-one {
+    color: hsl(0, 0%, 10%);
+}
+
+.no-one:hover {
+    cursor: none;
+    color: hsl(0, 0%, 100%);
+}
+
+.link {
+    color: hsl(0, 0%, 50%);
+}
+
+.link:hover {
+    color: hsl(0, 0%, 100%);
+    cursor: pointer;
+}
+
+
+
+#content-add,
+#content-search,
+#content-gift {
+    display: none;
+}
+
+
+
+/*-------*/
+/* ADD */
+
+.input-group {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.input-group input,
+.input-group textarea {
+    min-height: 37px;
+    width: 50%;
+    font-size: 14px;
+    padding: 10px;
+    background-color: hsl(0, 0%, 30%);
+    border: none;
+    color: white;
+}
+
+@media (max-width: 1100px) {
+    .input-group input,
+    .input-group textarea {
+        width: 90%;
+    }
+}
+
+.input-group input:focus,
+.input-group textarea:focus,
+.button:focus {
+    outline: none;
+    border: none;
+    -webkit-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+    -moz-box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+    box-shadow: 0px 1px 0px 0px hsl(0, 0%, 100%);
+}
+
+
+::placeholder {
+    color: hsl(0, 0%, 70%);
+}
+
+.input-group textarea {
+    resize: vertical;
+}
+
+.button {
+    border-radius: 0px;
+    background-color: hsl(0, 0%, 30%);
+    color: hsl(0, 0%, 90%);
+    padding: 10px;
+    width: 100px;
+    border: none;
+    user-select: none;
+}
+
+.button:hover {
+    cursor: pointer;
+    background-color: hsl(0, 0%, 70%);
+    color: hsl(0, 0%, 10%);
+}
+
+
+
+/*-------*/
+/* GIFT */
+#content-gift {
+    text-align: center;
+    font-size: 18px;
+}
+
+.gift-wrapper {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.gift-card {
+    min-width: 300px;
+    width: 300px;
+    height: 200px;
+    margin: 30px;
+    padding: 30px;
+    background-color: hsl(0, 0%, 15%);
+    overflow-wrap: break-word;
+}
