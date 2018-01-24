@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>depolitics</title>
+
+        {% load static %}
+
+        <link rel="apple-touch-icon" sizes="180x180" href="{% static 'application/images/favicon/apple-touch-icon.png' %}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{% static 'application/images/favicon/favicon-32x32.png' %}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{% static 'application/images/favicon/favicon-16x16.png' %}">
+        <link rel="manifest" href="{% static 'application/images/favicon/manifest.json' %}">
+        <link rel="mask-icon" href="{% static 'application/images/favicon/safari-pinned-tab.svg' %}" color="#5bbad5">
+        <link rel="shortcut icon" href="{% static 'application/images/favicon/favicon.ico' %}">
+        <meta name="msapplication-config" content="{% static 'application/images/favicon/browserconfig.xml' %}">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'application/css/style.css' %}">
+    </head>
+
+    <body>
+        <nav>
+            <h1><a href="https://depolitics.org">depolitics</a></h1>
+        </nav>
+
+        <div class="container">
+            <div class="tabs">
+                <ul id="ul-tabs">
+                    <li class="active" id="tab-about">about</li>
+                    <li id="tab-add">add</li>
+                    <li id="tab-search">search</li>
+                    <li id="tab-gift">gift</li>
+                </ul>
+            </div>
+           
+            <div class="content content-about" id="content-about">
+                <p>A politician should be <span class="no-one">no one.</span></p>
+                <p><span class="no-one">no one</span> should get into politics.</p>
+                <p>The first step towards a politics <span class="no-one">of no one</span> is to make the Name irrelevant.</p>
+                <p>Therefore, the IS, the Identification String, is to be used to replace the Name of the politician with an arbitrary, unpronounceable, unnameable, not-for-humans string of characters.</p>
+                <p>We shall not hope that the obfuscation of the Name will bring us closer to the Merit. However, we ought to aspire that it shall near Objectivity to us, even with the risk of Actor deresponsibilization. Or maybe in spite of it, after such a great deal of unresponsiveness (from the Actor to our Will), once unburdened, irresponsibility will open to the Ethic.</p>
+                <p class="call-to-action">
+                    <span class="link" id="link-use">use</span> the browser extension to replace the Name with the IS on every web page;
+                    <br><span class="link" id="link-add">add</span> more politicians to the database and generate their IS;
+                    <br> or <span class="link" id="link-search">search</span> for one's identity by the IS if you must
+                </p>
+
+            </div>
+
+            <div class="content content-add" id="content-add">
+                <div class="input-group">
+                    <input type="" name="" placeholder="first Name" tabindex="1">       
+                </div>
+
+                <div class="input-group">
+                    <input type="" name="" placeholder="last Name" tabindex="1">
+                </div>
+
+                <div class="input-group">                    
+                    <textarea rows="1" placeholder="name variants, comma separated" tabindex="1"></textarea>
+                </div>
+
+                <div class="input-group">                    
+                    <input type="" name="" placeholder="current political function" tabindex="1">
+                </div>
+
+                <div class="input-group">                    
+                    <textarea rows="1" placeholder="previous political functions, comma separated" tabindex="1"></textarea>
+                </div>
+
+                <div class="input-group">   
+                    <button class="button" tabindex="1">add</button>
+                </div>         
+
+                <div class="input-group">
+                    <p>the Identification String is<br>wgnisy6s</p>
+                </div>         
+            </div>
+
+            <div class="content content-search" id="content-search">
+                <div class="input-group">                    
+                    <input type="" name="" placeholder="Identification String">
+                </div>
+
+                <div class="input-group">                    
+                    <button class="button">search</button>
+                </div>
+
+                <div class="input-group">
+                    <input type="" name="" placeholder="first Name">       
+                </div>
+
+                <div class="input-group">
+                    <input type="" name="" placeholder="last Name">
+                </div>
+
+                <div class="input-group">                    
+                    <textarea rows="1" placeholder="name variants, comma separated"></textarea>
+                </div>
+
+                <div class="input-group">                    
+                    <input type="" name="" placeholder="current political function">
+                </div>
+
+                <div class="input-group">                    
+                    <textarea rows="1" placeholder="previous political functions, comma separated"></textarea>
+                </div>
+
+                <div class="input-group">                    
+                    <button class="button">save</button>
+                </div>
+            </div>
+
+            <div class="content content-gift" id="content-gift">
+                <p>if you would enjoy gifting currency for server time or for whatever reason, consider</p>
+                
+                <div class="gift-wrapper">
+                    <div class="gift-card">
+                        <p>dollars</p>
+                        <p>with <a href="https://paypal.me/caveljan">PayPal</a></p>
+                    </div>
+
+                    <div class="gift-card">
+                        <p>bitcoins</p>
+                        <p id="bitcoin-address">1FxGWLvnDY39h6zCxdd1GMMj21CzK5s3US</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>    
+
+        <footer id="footer">
+            <h1>a <a href="https://caveljan.com">caveljan</a> realization</h1>
+        </footer>
+
+<!-- 
+{% if politicians_list %}
+    {% for politician in politicians_list %}
+        <ul>
+            <li>{{ politician.first_name }}</li>
+            <li>{{ politician.last_name }}</li>    
+            <li>{{ politician.name_variants }}</li>    
+            <li>{{ politician.current_function }}</li>    
+            <li>{{ politician.previous_functions }}</li>    
+            <li>{{ politician.identification_string }}</li>    
+        </ul>
+    {% endfor %}
+{% else %}
+    <p>Add politicians</p>
+{% endif %} 
+-->
+
+        <script type="text/javascript" src="{% static 'application/js/script.js' %}"></script>
+    </body>
+</html>
+
+
+

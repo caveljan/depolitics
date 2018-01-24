@@ -10,7 +10,4 @@ def index(request):
         'politicians_list': politicians_list,
     }
 
-    # template = loader.get_template('add/index.html')
-    # return HttpResponse(template.render(context, request))
-
-    return render(request, 'add/index.html', context)
+    return render(request, 'application/index.html', context)
