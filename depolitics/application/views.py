@@ -1,10 +1,15 @@
+import json
 from django.shortcuts import render
+
 from django.http import HttpResponse
 from django.http import JsonResponse
-import json
+
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import Politician
 from .forms import AddForm
+
+
 
 def index(request):
     politicians_list = Politician.objects.all()
@@ -22,7 +27,6 @@ def add_name(request):
         name_variants = request.POST['name_variants']
         current_function = request.POST['current_function']
         previous_functions = request.POST['previous_functions']
-
         Politician.objects.create(
             first_name = first_name,
             last_name = last_name,
@@ -30,22 +34,17 @@ def add_name(request):
             current_function = current_function,
             previous_functions = previous_functions
         )
-
-        # print(Politician.objects.filter(first_name=first_name).values('identification_string'))
         identification_string = list(Politician.objects.filter(first_name=first_name).values('identification_string'))
-        # data = json.dumps({'identification_string': identification_string})
         data = {
             'identification_string': identification_string
         }
-
-        # return HttpResponse(data, content_type="application/json")
         return JsonResponse(data)
 
 
+@csrf_exempt
 def search_id_string(request):
     if request.method == "POST":
         identification_string = request.POST['identification_string']
-
         politician = list(Politician.objects.
                             filter(identification_string=identification_string).
                             values('first_name',
@@ -53,9 +52,7 @@ def search_id_string(request):
                                    'name_variants',
                                    'current_function',
                                    'previous_functions'))
-
         data = {
             'politician': politician
         }
-
         return JsonResponse(data)
