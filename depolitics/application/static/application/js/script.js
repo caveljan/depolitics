@@ -3,7 +3,7 @@
 setActiveTab();
 clearSearchedResponse();
 expandGiftDrawer();
-
+ajaxAddForm();
 
 ////////////
 // Functions
@@ -120,40 +120,109 @@ function expandGiftDrawer() {
 
 
 
-$(document).on("submit", "#add-form", function(e) {
-    e.preventDefault();
 
-    $.ajax({
-        type: "POST",
-        url: "/add/",
-        data: {
-            first_name: $("#input-first-name").val(),
-            last_name: $("#input-last-name").val(),
-            name_variants: $("#input-name-variants").val(),
-            current_function: $("#input-current-function").val(),
-            previous_functions: $("#input-previous-functions").val(),
-            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-        },
-        success: function(response){
-            let data = response;
-            console.log(data);
-            let idString = data['identification_string'][0]['identification_string'];
-            let name = $("#input-first-name").val() + " " + $("#input-last-name").val()
-            let stringContent = 'the Identification String for the politician ' +
-                                 name + ' is ' + 
-                                 '<span class="input-id-string">' + idString + '</span>';
-            
-            $("#input-first-name").val('');
-            $("#input-last-name").val('');
-            $("#input-name-variants").val('');
-            $("#input-current-function").val('');
-            $("#input-previous-functions").val('');
-            $("#text-id-string")[0].innerHTML = stringContent;
 
-            // $("#input-id-string")[0].textContent = "success";
+function ajaxAddForm() {
+    let inputAddSubmit = document.getElementById("input-add-submit");
+
+    inputAddSubmit.addEventListener("click", event => {
+        event.preventDefault();
+        makeAjaxCall();
+    })
+
+    function makeAjaxCall() {
+        let xhr = new XMLHttpRequest();
+        let url = "/add/";
+
+        let firstName = document.getElementById("input-first-name").value;
+        let lastName = document.getElementById("input-last-name").value;
+        let nameVariants = document.getElementById("input-name-variants").value;
+        let currentFunction = document.getElementById("input-current-function").value;
+        let previousFunctions = document.getElementById("input-previous-functions").value;
+        let csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+        let inputData = {
+            "first_name": firstName,
+            "last_name": lastName,
+            "name_variants": nameVariants,
+            "current_function": currentFunction,
+            "previous_functions": previousFunctions,
         }
-    });
-});
+
+        let parameters = `first_name=${firstName}&last_name=${lastName}&name_variants=${nameVariants}&current_function=${currentFunction}&previous_functions=${previousFunctions}&csrfmiddlewaretoken=${csrfmiddlewaretoken}`;
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                // console.log(xhr.responseText);
+                handleResponse(inputData, xhr.responseText);
+            }
+        }
+        xhr.send(parameters);
+    }
+
+    function handleResponse(inputData, response) {
+        let data = JSON.parse(response);
+        // console.log(data);
+
+        let firstName = document.getElementById("input-first-name");
+        let lastName = document.getElementById("input-last-name");
+        let nameVariants = document.getElementById("input-name-variants");
+        let currentFunction = document.getElementById("input-current-function");
+        let previousFunctions = document.getElementById("input-previous-functions");
+        let textIdString = document.getElementById("text-id-string");
+
+        let idString = data['identification_string'][0]['identification_string'];
+        let name = firstName.value + " " + lastName.value;
+        let stringContent = 'the Identification String for the politician ' +
+                             name + ' is ' + 
+                             '<span class="input-id-string">' + idString + '</span>';
+        
+        firstName.value = "";
+        lastName.value = "";
+        nameVariants.value = "";
+        currentFunction.value = "";
+        previousFunctions.value = "";
+        textIdString.innerHTML = stringContent;
+    }
+}
+
+
+// $(document).on("submit", "#add-form", function(e) {
+//     e.preventDefault();
+
+//     $.ajax({
+//         type: "POST",
+//         url: "/add/",
+//         data: {
+//             first_name: $("#input-first-name").val(),
+//             last_name: $("#input-last-name").val(),
+//             name_variants: $("#input-name-variants").val(),
+//             current_function: $("#input-current-function").val(),
+//             previous_functions: $("#input-previous-functions").val(),
+//             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+//         },
+//         success: function(response){
+//             let data = response;
+//             console.log(data);
+//             let idString = data['identification_string'][0]['identification_string'];
+//             let name = $("#input-first-name").val() + " " + $("#input-last-name").val()
+//             let stringContent = 'the Identification String for the politician ' +
+//                                  name + ' is ' + 
+//                                  '<span class="input-id-string">' + idString + '</span>';
+            
+//             $("#input-first-name").val('');
+//             $("#input-last-name").val('');
+//             $("#input-name-variants").val('');
+//             $("#input-current-function").val('');
+//             $("#input-previous-functions").val('');
+//             $("#text-id-string")[0].innerHTML = stringContent;
+
+//             // $("#input-id-string")[0].textContent = "success";
+//         }
+//     });
+// });
 
 
 $(document).on("submit", "#search-form", function(e) {
