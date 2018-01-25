@@ -3,6 +3,8 @@
 setActiveTab();
 clearSearchedResponse();
 expandGiftDrawer();
+
+// TODO fix bug when adding twice in a row and displaying same IS
 ajaxAddForm();
 ajaxSearchForm()
 
