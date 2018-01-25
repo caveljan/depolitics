@@ -117,7 +117,7 @@
             </div>
 
             <div class="content content-search" id="content-search">
-                <form action="{% url 'search_id_string' %}" method="GET">
+                <form id="search-form"">
                     <div class="input-group">                    
                         <input
                             type="text"
@@ -133,28 +133,45 @@
                         <button type="submit" class="button">search</button>
                     </div>
 
-                    <div class="input-group">
-                        <input type="" name="" placeholder="first Name">       
-                    </div>
+                    <div id="search-response">
+                        <div class="input-group">
+                            <div class="search-group">
+                                first Name <span id="search-first-name"></span>
+                            </div>
+                            <!-- <input type="" name="" placeholder="first Name">        -->
+                        </div>
 
-                    <div class="input-group">
-                        <input type="" name="" placeholder="last Name">
-                    </div>
+                        <div class="input-group">
+                            <div class="search-group">
+                                last Name <span id="search-last-name"></span>
+                            </div>
+                            <!-- <input type="" name="" placeholder="last Name"> -->
+                        </div>
 
-                    <div class="input-group">                    
-                        <textarea rows="1" placeholder="name variants, comma separated"></textarea>
-                    </div>
+                        <div class="input-group">
+                            <div class="search-group">
+                                name variants <span id="search-name-variants"></span>
+                            </div>
+                            <!-- <textarea rows="1" placeholder="name variants, comma separated"></textarea> -->
+                        </div>
 
-                    <div class="input-group">                    
-                        <input type="" name="" placeholder="current political function">
-                    </div>
+                        <div class="input-group">    
+                            <div class="search-group">
+                                current political function <span id="search-current-function"></span>
+                            </div>            
+                            <!-- <input type="" name="" placeholder="current political function"> -->
+                        </div>
 
-                    <div class="input-group">                    
-                        <textarea rows="1" placeholder="previous political functions, comma separated"></textarea>
-                    </div>
+                        <div class="input-group">    
+                            <div class="search-group">
+                                previous political functions <span id="search-previous-functions"></span>
+                            </div> 
+                            <!-- <textarea rows="1" placeholder="previous political functions, comma separated"></textarea> -->
+                        </div>
 
-                    <div class="input-group">                    
-                        <button class="button">save</button>
+                        <div class="input-group">                    
+                            <!-- <button class="button">save</button> -->
+                        </div>
                     </div>
                 </form>
             </div>
@@ -174,30 +191,13 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
 
         <footer id="footer">
             <h1>
                 a <a href="https://caveljan.com">caveljan</a> realization
             </h1>
         </footer>
-<!-- 
- 
-{% if politicians_list %}
-    {% for politician in politicians_list %}
-        <ul>
-            <li>{{ politician.first_name }}</li>
-            <li>{{ politician.last_name }}</li>    
-            <li>{{ politician.name_variants }}</li>    
-            <li>{{ politician.current_function }}</li>    
-            <li>{{ politician.previous_functions }}</li>    
-            <li>{{ politician.identification_string }}</li>    
-        </ul>
-    {% endfor %}
-{% else %}
-    <p>Add politicians</p>
-{% endif %} 
- -->
 
         <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -238,6 +238,39 @@
                         $("#text-id-string")[0].innerHTML = stringContent;
 
                         // $("#input-id-string")[0].textContent = "success";
+                    }
+                });
+            });
+        </script>
+
+        <script type="text/javascript">
+            $(document).on("submit", "#search-form", function(e) {
+                e.preventDefault();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/search/",
+                    data: {
+                        identification_string: $("#input-search-string").val(),
+                        csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+                    },
+                    success: function(response){
+                        let data = response;
+                        let politician = data['politician'][0];
+                        let firstName = politician['first_name'];
+                        let lastName = politician['last_name'];
+                        let nameVariants = politician['name_variants']
+                        let currentFunction = politician['current_function']
+                        let previousFunctions = politician['previous_functions']
+                        console.log(firstName);
+                        console.log(lastName);
+
+                        $("#search-response").css("display", "block");
+                        $("#search-first-name").text(firstName);
+                        $("#search-last-name").text(lastName);
+                        $("#search-name-variants").text(nameVariants);
+                        $("#search-current-function").text(currentFunction);
+                        $("#search-previous-functions").text(previousFunctions);
                     }
                 });
             });

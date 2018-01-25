@@ -41,5 +41,21 @@ def add_name(request):
         # return HttpResponse(data, content_type="application/json")
         return JsonResponse(data)
 
-def search_id_string():
-    pass
+
+def search_id_string(request):
+    if request.method == "POST":
+        identification_string = request.POST['identification_string']
+
+        politician = list(Politician.objects.
+                            filter(identification_string=identification_string).
+                            values('first_name',
+                                   'last_name',
+                                   'name_variants',
+                                   'current_function',
+                                   'previous_functions'))
+
+        data = {
+            'politician': politician
+        }
+
+        return JsonResponse(data)
