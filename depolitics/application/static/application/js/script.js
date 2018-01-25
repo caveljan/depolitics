@@ -4,6 +4,8 @@ setActiveTab();
 clearSearchedResponse();
 expandGiftDrawer();
 ajaxAddForm();
+ajaxSearchForm()
+
 
 ////////////
 // Functions
@@ -119,9 +121,7 @@ function expandGiftDrawer() {
 }
 
 
-
-
-
+// AJAX
 function ajaxAddForm() {
     let inputAddSubmit = document.getElementById("input-add-submit");
 
@@ -141,30 +141,20 @@ function ajaxAddForm() {
         let previousFunctions = document.getElementById("input-previous-functions").value;
         let csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
-        let inputData = {
-            "first_name": firstName,
-            "last_name": lastName,
-            "name_variants": nameVariants,
-            "current_function": currentFunction,
-            "previous_functions": previousFunctions,
-        }
-
         let parameters = `first_name=${firstName}&last_name=${lastName}&name_variants=${nameVariants}&current_function=${currentFunction}&previous_functions=${previousFunctions}&csrfmiddlewaretoken=${csrfmiddlewaretoken}`;
 
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if(xhr.readyState == 4 && xhr.status == 200) {
-                // console.log(xhr.responseText);
-                handleResponse(inputData, xhr.responseText);
+                handleResponse(xhr.responseText);
             }
         }
         xhr.send(parameters);
     }
 
-    function handleResponse(inputData, response) {
+    function handleResponse(response) {
         let data = JSON.parse(response);
-        // console.log(data);
 
         let firstName = document.getElementById("input-first-name");
         let lastName = document.getElementById("input-last-name");
@@ -188,6 +178,71 @@ function ajaxAddForm() {
     }
 }
 
+
+function ajaxSearchForm() {
+    let inputSearchSubmit = document.getElementById("input-search-submit");
+
+    inputSearchSubmit.addEventListener("click", event => {
+        event.preventDefault();
+        makeAjaxCall();
+    })
+
+    function makeAjaxCall() {
+        let xhr = new XMLHttpRequest();
+        let url = "/search/";
+
+        // let firstName = document.getElementById("input-first-name").value;
+        // let lastName = document.getElementById("input-last-name").value;
+        // let nameVariants = document.getElementById("input-name-variants").value;
+        // let currentFunction = document.getElementById("input-current-function").value;
+        // let previousFunctions = document.getElementById("input-previous-functions").value;
+        let searchString = document.getElementById("input-search-string").value;
+        let csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+        let parameters = `identification_string=${searchString}`;
+
+        xhr.open("POST", url, true);
+        xhr.withCredentials = false;
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                handleResponse(xhr.responseText);
+            }
+        }
+        xhr.send(parameters);
+    }
+
+    function handleResponse(response) {
+        let data = JSON.parse(response);
+        let politician = {
+            "firstName": data.politician[0].first_name,
+            "lastName": data.politician[0].last_name,
+            "nameVariants": data.politician[0].name_variants,
+            "currentFunction": data.politician[0].current_function,
+            "previousFunctions": data.politician[0].previous_functions
+        }
+
+        console.log(politician);
+
+        let firstName = document.getElementById("search-first-name");
+        let lastName = document.getElementById("search-last-name");
+        let nameVariants = document.getElementById("search-name-variants");
+        let currentFunction = document.getElementById("search-current-function");
+        let previousFunctions = document.getElementById("search-previous-functions");
+        let searchResponse = document.getElementById("search-response");
+
+        searchResponse.style.display = "block";
+        firstName.innerText = politician.firstName;
+        lastName.innerText = politician.lastName;
+        nameVariants.innerText = politician.nameVariants;
+        currentFunction.innerText = politician.currentFunction;
+        previousFunctions.innerText = politician.previousFunctions;
+    }
+}
+
+
+///////////////////
+// AJAX with jQuery
 
 // $(document).on("submit", "#add-form", function(e) {
 //     e.preventDefault();
@@ -225,33 +280,33 @@ function ajaxAddForm() {
 // });
 
 
-$(document).on("submit", "#search-form", function(e) {
-    e.preventDefault();
+// $(document).on("submit", "#search-form", function(e) {
+//     e.preventDefault();
 
-    $.ajax({
-        type: "POST",
-        url: "/search/",
-        data: {
-            identification_string: $("#input-search-string").val(),
-            csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-        },
-        success: function(response){
-            let data = response;
-            let politician = data['politician'][0];
-            let firstName = politician['first_name'];
-            let lastName = politician['last_name'];
-            let nameVariants = politician['name_variants']
-            let currentFunction = politician['current_function']
-            let previousFunctions = politician['previous_functions']
-            console.log(firstName);
-            console.log(lastName);
+//     $.ajax({
+//         type: "POST",
+//         url: "/search/",
+//         data: {
+//             identification_string: $("#input-search-string").val(),
+//             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
+//         },
+//         success: function(response){
+//             let data = response;
+//             let politician = data['politician'][0];
+//             let firstName = politician['first_name'];
+//             let lastName = politician['last_name'];
+//             let nameVariants = politician['name_variants']
+//             let currentFunction = politician['current_function']
+//             let previousFunctions = politician['previous_functions']
+//             console.log(firstName);
+//             console.log(lastName);
 
-            $("#search-response").css("display", "block");
-            $("#search-first-name").text(firstName);
-            $("#search-last-name").text(lastName);
-            $("#search-name-variants").text(nameVariants);
-            $("#search-current-function").text(currentFunction);
-            $("#search-previous-functions").text(previousFunctions);
-        }
-    });
-});
+//             $("#search-response").css("display", "block");
+//             $("#search-first-name").text(firstName);
+//             $("#search-last-name").text(lastName);
+//             $("#search-name-variants").text(nameVariants);
+//             $("#search-current-function").text(currentFunction);
+//             $("#search-previous-functions").text(previousFunctions);
+//         }
+//     });
+// });
