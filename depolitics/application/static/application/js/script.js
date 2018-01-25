@@ -114,3 +114,20 @@ inputSearchString.addEventListener("input", function() {
         searchResponse.style.display = "none";
     }
 })
+
+
+let giftCryptoExpand = document.getElementById("gift-crypto-expand");
+let giftCardCrypto = document.getElementById("gift-card-crypto");
+let giftCardDrawer = document.getElementById("gift-card-drawer");
+
+giftCryptoExpand.addEventListener("click", () => {
+    if (giftCardCrypto.style.height == "630px") {
+        giftCryptoExpand.innerHTML = "&#9660;";
+        giftCardCrypto.style.height = "200px";
+        giftCardDrawer.style.display = "none";
+    } else {
+        giftCryptoExpand.innerHTML = "&#9650;";
+        giftCardCrypto.style.height = "630px";
+        giftCardDrawer.style.display = "block";
+    }
+});

@@ -305,3 +305,17 @@ footer h1 {
     background-color: hsl(0, 0%, 15%);
     overflow-wrap: break-word;
 }
+
+#gift-crypto-expand {
+    cursor: pointer;
+    user-select: none;
+    color: hsl(0, 0%, 50%);
+}
+
+#gift-crypto-expand:hover {
+    color: hsl(0, 0%, 100%);
+}
+
+#gift-card-drawer {
+    display: none;
+}        
