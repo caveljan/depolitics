@@ -1,25 +1,24 @@
 // random generator logic
+// let idString = "";
 
-let idString = "";
+// for (let i = 0; i < 8; i++) {
+//     let randomChar = getRandomChar();
 
-for (let i = 0; i < 8; i++) {
-    let randomChar = getRandomChar();
+//     idString += randomChar;
+// }
 
-    idString += randomChar;
-}
+// function getRandomChar() {
+//     let chars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
+//                  "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", 
+//                  "u", "v", "w", "x", "y", "z",
+//                  "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
 
-function getRandomChar() {
-    let chars = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", 
-                 "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", 
-                 "u", "v", "w", "x", "y", "z",
-                 "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+//     indexNumber = Math.ceil(Math.random()*100 % 35);
 
-    indexNumber = Math.ceil(Math.random()*100 % 35);
+//     return chars[indexNumber];
+// }
 
-    return chars[indexNumber];
-}
-
-console.log(idString);
+// console.log(idString);
 
 
 
@@ -104,3 +103,14 @@ function setActiveClassToTab(element) {
 
     element.classList.add("active");
 }
+
+
+let inputSearchString = document.getElementById("input-search-string");
+let searchResponse = document.getElementById("search-response");
+
+inputSearchString.addEventListener("input", function() {
+    if(this.value == "") {
+        console.log("works")
+        searchResponse.style.display = "none";
+    }
+})
