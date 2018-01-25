@@ -253,6 +253,10 @@ footer h1 {
     color: hsl(0, 0%, 10%);
 }
 
+.input-id-string {
+    padding: 7px;
+    background-color: hsl(0, 0%, 30%);
+}
 
 
 /*-------*/
