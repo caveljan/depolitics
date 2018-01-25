@@ -105,13 +105,13 @@ function expandGiftDrawer() {
     let giftCardDrawer = document.getElementById("gift-card-drawer");
 
     giftCryptoExpand.addEventListener("click", () => {
-        if (giftCardCrypto.style.height == "630px") {
+        if (giftCardCrypto.style.height == "530px") {
             giftCryptoExpand.innerHTML = "&#9660;";
             giftCardCrypto.style.height = "200px";
             giftCardDrawer.style.display = "none";
         } else {
             giftCryptoExpand.innerHTML = "&#9650;";
-            giftCardCrypto.style.height = "630px";
+            giftCardCrypto.style.height = "530px";
             giftCardDrawer.style.display = "block";
             // window.scrollTo(0,document.body.scrollHeight);
         }

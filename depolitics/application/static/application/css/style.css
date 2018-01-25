@@ -1,3 +1,6 @@
+/* --------------------------
+General
+---------------------------*/
 html {
     height: 100%;
     box-sizing: border-box;
@@ -92,8 +95,10 @@ footer h1 {
 }
 
 
-/*-------*/
-/* TABS */
+
+/* --------------------------
+Tabs
+---------------------------*/
 .tabs {
     display: flex;
     align-items: center;
@@ -134,9 +139,10 @@ footer h1 {
 }
 
 
-/*-------*/
-/* CONTENT */
 
+/* --------------------------
+Content
+---------------------------*/
 .content {
     font-size: 20px;
     line-height: 1.6;
@@ -146,6 +152,16 @@ footer h1 {
     margin-bottom: 30px;
 }
 
+#content-add,
+#content-search,
+#content-gift {
+    display: none;
+}
+
+
+/* --------------------------
+Content About
+---------------------------*/
 .content-about {
     text-align: justify;
     margin-left: 10%;
@@ -183,17 +199,9 @@ footer h1 {
 }
 
 
-#content-add,
-#content-search,
-#content-gift {
-    display: none;
-}
-
-
-
-/*-------*/
-/* ADD */
-
+/* --------------------------
+Content Add
+---------------------------*/
 .input-group {
     text-align: center;
     margin-bottom: 50px;
@@ -252,12 +260,10 @@ footer h1 {
     color: hsl(0, 0%, 10%);
 }
 
-.input-id-string {
-    padding: 7px;
-    background-color: hsl(0, 0%, 30%);
-}
 
-
+/* --------------------------
+Content Search
+---------------------------*/
 #search-response {
     display: none;
 }
@@ -280,9 +286,9 @@ footer h1 {
 }
 
 
-
-/*-------*/
-/* GIFT */
+/* --------------------------
+Content Gift
+---------------------------*/
 #content-gift {
     text-align: center;
     font-size: 18px;
