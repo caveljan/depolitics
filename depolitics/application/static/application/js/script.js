@@ -10,6 +10,7 @@ ajaxAddForm();
 ajaxSearchForm()
 
 
+
 ////////////
 // Functions
 function setActiveTab() {
@@ -139,7 +140,7 @@ function disableSearchIfEmptyString() {
     }
 
     inputSearchString.addEventListener("input", (event) => {
-        if (event.inputType == "deleteContentBackward" && event.data == null) {
+        if (inputSearchString.value == "") {
             setEmpty(inputSearchSubmit);
         } else {
             inputSearchSubmit.style.opacity = "1";
@@ -156,8 +157,8 @@ function disableAddIfEmptyString() {
     let inputAddSubmit = document.getElementById("input-add-submit");
 
     if (inputFirstName.value == "" 
-        && inputLastName.value == "" 
-        && inputCurrentFunction.value == "") {
+        || inputLastName.value == "" 
+        || inputCurrentFunction.value == "") {
             setEmpty(inputAddSubmit)
     }
 
@@ -166,7 +167,7 @@ function disableAddIfEmptyString() {
     let currentFunctionState = false;
 
     inputFirstName.addEventListener("input", (event) => {
-        if (event.inputType == "deleteContentBackward" && event.data == null) {
+        if (inputFirstName.value == "") {
             setEmpty(inputAddSubmit);
             firstNameState = false;
         } else {
@@ -176,7 +177,7 @@ function disableAddIfEmptyString() {
     });
 
     inputLastName.addEventListener("input", (event) => {
-        if (event.inputType == "deleteContentBackward" && event.data == null) {
+        if (inputLastName.value == "") {
             setEmpty(inputAddSubmit);
             lastNameState = false;
         } else {
@@ -186,7 +187,7 @@ function disableAddIfEmptyString() {
     });
 
     inputCurrentFunction.addEventListener("input", (event) => {
-        if (event.inputType == "deleteContentBackward" && event.data == null) {
+        if (inputCurrentFunction.value == "") {
             setEmpty(inputAddSubmit);
             currentFunctionState = false;
         } else {
