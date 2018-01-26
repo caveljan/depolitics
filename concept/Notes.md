@@ -46,3 +46,7 @@ The name replacements need to be done with a tree in order to reduce calculation
 To use a trie for full text search indexing.
 
 `https://www.wikiwand.com/en/Trie`
+
+
+## Future
+To put it on the blockchain? The advantages do not seem so big, beyond having a freed database. And what could be the edit mechanism?
