@@ -56,3 +56,22 @@ def search_id_string(request):
             'politician': politician
         }
         return JsonResponse(data)
+
+
+def api_database(request):
+    politicians = list(Politician.objects.all().values())
+    return JsonResponse(politicians, safe=False)
+
+def api_search(request):
+    identification_string = request.GET.get('identification_string', '')
+    politician = list(Politician.objects.
+                        filter(identification_string=identification_string).
+                        values('first_name',
+                               'last_name',
+                               'name_variants',
+                               'current_function',
+                               'previous_functions'))
+    data = {
+        'politician': politician
+    }
+    return JsonResponse(data)
