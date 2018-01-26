@@ -131,25 +131,6 @@ function setEmpty(button) {
 }
 
 
-function disableSearchIfEmptyString() {
-    let inputSearchString = document.getElementById("input-search-string");
-    let inputSearchSubmit = document.getElementById("input-search-submit");
-
-    if (inputSearchString.value == "") {
-        setEmpty(inputSearchSubmit)
-    }
-
-    inputSearchString.addEventListener("input", (event) => {
-        if (inputSearchString.value == "") {
-            setEmpty(inputSearchSubmit);
-        } else {
-            inputSearchSubmit.style.opacity = "1";
-            inputSearchSubmit.removeAttribute("disabled");
-        }
-    });
-}
-
-
 function disableAddIfEmptyString() {
     let inputFirstName = document.getElementById("input-first-name");
     let inputLastName = document.getElementById("input-last-name");
@@ -202,6 +183,24 @@ function disableAddIfEmptyString() {
             inputAddSubmit.removeAttribute("disabled");      
         }
     }
+}
+
+
+function disableSearchIfEmptyString() {
+    let inputSearchString = document.getElementById("input-search-string");
+    let inputSearchSubmit = document.getElementById("input-search-submit");
+    if (inputSearchString.value.length < 8) {
+        setEmpty(inputSearchSubmit)
+    }
+
+    inputSearchString.addEventListener("input", (event) => {
+        if (inputSearchString.value.length < 8) {
+            setEmpty(inputSearchSubmit);
+        } else {
+            inputSearchSubmit.style.opacity = "1";
+            inputSearchSubmit.removeAttribute("disabled");
+        }
+    });
 }
 
 
