@@ -165,7 +165,7 @@ function ajaxAddForm() {
         let previousFunctions = document.getElementById("input-previous-functions");
         let textIdString = document.getElementById("text-id-string");
 
-        let idString = data['identification_string'][0]['identification_string'];
+        let idString = data[0]['identification_string'];
         let name = firstName.value + " " + lastName.value;
         let stringContent = 'the Identification String for the politician ' +
                              name + ' is ' + 
@@ -193,11 +193,6 @@ function ajaxSearchForm() {
         let xhr = new XMLHttpRequest();
         let url = "/search/";
 
-        // let firstName = document.getElementById("input-first-name").value;
-        // let lastName = document.getElementById("input-last-name").value;
-        // let nameVariants = document.getElementById("input-name-variants").value;
-        // let currentFunction = document.getElementById("input-current-function").value;
-        // let previousFunctions = document.getElementById("input-previous-functions").value;
         let searchString = document.getElementById("input-search-string").value;
         let csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
 
@@ -217,11 +212,11 @@ function ajaxSearchForm() {
     function handleResponse(response) {
         let data = JSON.parse(response);
         let politician = {
-            "firstName": data.politician[0].first_name,
-            "lastName": data.politician[0].last_name,
-            "nameVariants": data.politician[0].name_variants,
-            "currentFunction": data.politician[0].current_function,
-            "previousFunctions": data.politician[0].previous_functions
+            "firstName": data[0].first_name,
+            "lastName": data[0].last_name,
+            "nameVariants": data[0].name_variants,
+            "currentFunction": data[0].current_function,
+            "previousFunctions": data[0].previous_functions
         }
 
         console.log(politician);
@@ -241,6 +236,7 @@ function ajaxSearchForm() {
         previousFunctions.innerText = politician.previousFunctions;
     }
 }
+
 
 
 ///////////////////
