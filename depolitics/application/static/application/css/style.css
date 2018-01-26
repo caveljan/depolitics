@@ -109,7 +109,7 @@ Tabs
     justify-content: center;
     height: 40px;
     margin-top: 30px;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
     user-select: none;
 }
 
@@ -392,3 +392,16 @@ Content Gift
 #gift-card-drawer {
     display: none;
 }        
+
+#btc-address,
+#eth-address,
+#ltc-address {
+    color: hsl(0, 0%, 50%);
+    cursor: pointer;
+}
+
+#btc-address:hover,
+#eth-address:hover,
+#ltc-address:hover {
+    color: hsl(0, 0%, 100%);
+}

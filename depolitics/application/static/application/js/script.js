@@ -5,6 +5,7 @@ clearSearchedResponse();
 expandGiftDrawer();
 disableSearchIfEmptyString();
 disableAddIfEmptyString();
+copyCryptosOnClick();
 
 ajaxAddForm();
 ajaxSearchForm()
@@ -201,6 +202,56 @@ function disableSearchIfEmptyString() {
             inputSearchSubmit.removeAttribute("disabled");
         }
     });
+}
+
+
+function copyCryptosOnClick() {
+    function copyBtcAdressOnClick() {
+        let btc = document.getElementById("btc-address");
+        let address = "1CKq4q1bUiMoz29XtdP9DYp2GsNavC5AKt"
+        copyCryptoAddress(btc, address)
+    }
+
+    function copyEthAdressOnClick() {
+        let eth = document.getElementById("eth-address");
+        let address = "0xDb31358ec77526458Dba0f4b2246E5033D232Bc0"
+        copyCryptoAddress(eth, address)
+    }
+
+    function copyLtcAdressOnClick() {
+        let ltc = document.getElementById("ltc-address");
+        let address = "LiG5tTW8gpJzXr5tW6akNZH1uFmFHT5zrn"
+        copyCryptoAddress(ltc, address)
+    }
+
+    function copyCryptoAddress(crypto, address) {
+        crypto.addEventListener("click", () => {
+            let range = document.createRange();  
+            range.selectNode(crypto);  
+            let selection = window.getSelection()
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            try {  
+                document.execCommand('copy');
+                crypto.innerHTML = "address<br>copied";
+                setTimeout(function() {
+                    crypto.innerText = address;
+                }, 2000);
+            } catch(err) {  
+                crypto.innerHTML = "address<br>couldn't be copied";
+                setTimeout(function() {
+                    crypto.innerText = address;
+                }, 2000);
+            }
+            
+            window.getSelection().removeAllRanges(); 
+        });
+    }
+
+    copyBtcAdressOnClick();
+    copyEthAdressOnClick();
+    copyLtcAdressOnClick();
 }
 
 
