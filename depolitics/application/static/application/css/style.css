@@ -250,6 +250,17 @@ Content Add
     resize: vertical;
 }
 
+.input-message {
+    text-align: center;
+    margin-left: -30px;
+}
+
+@media (max-width: 1000px) {
+    .input-message {
+        margin-left: 0px;
+    }
+}
+
 .button {
     border-radius: 0px;
     background-color: hsl(0, 0%, 30%);
@@ -271,6 +282,10 @@ Content Add
     background-color: hsl(0, 0%, 30%);
 }
 
+.input-id-string::selection {
+    background-color: hsl(0, 0%, 70%);
+}
+
 
 /* --------------------------
 Content Search
@@ -283,10 +298,12 @@ Content Search
     font-size: 14px;
     text-align: left;
     margin-left: 25%;
+    margin-right: 25%;
 }
 
 .search-group span {
     margin-left: 20px;
+    margin-right: 20px;
     font-size: 18px;
 }
 
@@ -297,6 +314,7 @@ Content Search
 }
 
 #search-found p {
+    line-height: 2.5;
     margin-top: 60px;
     font-size: 16px;
 }
