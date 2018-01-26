@@ -21,34 +21,55 @@ def index(request):
 
 
 def add_name(request):
-    # TODO validate if there isn't someone with the same first_name, last_name already
+    # TODO, check that first_name, last_name, and current_function are not ""
     if request.method == "POST":
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
         name_variants = request.POST['name_variants']
         current_function = request.POST['current_function']
         previous_functions = request.POST['previous_functions']
-        Politician.objects.create(
-            first_name = first_name,
-            last_name = last_name,
-            name_variants = name_variants,
-            current_function = current_function,
-            previous_functions = previous_functions
-        )
-        identification_string = list(Politician.objects.
-                                                filter(first_name=first_name).
-                                                filter(last_name=last_name).
-                                                values('identification_string'))
-        return JsonResponse(identification_string, safe=False)
+
+        if first_name == "" or last_name == "" or current_function == "":
+            not_filled = {
+                'not filled': 1,
+            }
+            return JsonResponse(not_filled)
+
+        first_name = first_name.strip().title()
+        last_name = last_name.strip().title()
+        database_identification_string = list(Politician.objects \
+                                                        .filter(first_name=first_name) \
+                                                        .filter(last_name=last_name) \
+                                                        .values('identification_string'))
+
+        if not database_identification_string:
+            Politician.objects.create(
+                first_name = first_name,
+                last_name = last_name,
+                name_variants = name_variants,
+                current_function = current_function,
+                previous_functions = previous_functions
+            )
+            identification_string = list(Politician.objects \
+                                                    .filter(first_name=first_name) \
+                                                    .filter(last_name=last_name) \
+                                                    .values('identification_string'))
+            return JsonResponse(identification_string, safe=False)
+        else:
+            exists = {
+                'exists': 1,
+                'identification_string': database_identification_string
+            }
+            return JsonResponse(exists)
 
 
 @csrf_exempt
 def search_id_string(request):
     if request.method == "POST":
         identification_string = request.POST['identification_string']
-        politician = list(Politician.objects.
-                                    filter(identification_string=identification_string).
-                                    values('first_name',
+        politician = list(Politician.objects \
+                                    .filter(identification_string=identification_string) \
+                                    .values('first_name',
                                            'last_name',
                                            'name_variants',
                                            'current_function',

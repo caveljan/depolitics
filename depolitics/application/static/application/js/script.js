@@ -4,6 +4,7 @@ setActiveTab();
 clearSearchedResponse();
 expandGiftDrawer();
 disableSearchIfEmptyString();
+disableAddIfEmptyString();
 
 ajaxAddForm();
 ajaxSearchForm()
@@ -123,6 +124,12 @@ function expandGiftDrawer() {
 }
 
 
+function setEmpty(button) {
+    button.style.opacity = "0.3";
+    button.setAttribute("disabled", true);
+}
+
+
 function disableSearchIfEmptyString() {
     let inputSearchString = document.getElementById("input-search-string");
     let inputSearchSubmit = document.getElementById("input-search-submit");
@@ -142,12 +149,59 @@ function disableSearchIfEmptyString() {
 }
 
 
-function setEmpty(inputSearchSubmit) {
-    inputSearchSubmit.style.opacity = "0.3";
-    inputSearchSubmit.setAttribute("disabled", true);
+function disableAddIfEmptyString() {
+    let inputFirstName = document.getElementById("input-first-name");
+    let inputLastName = document.getElementById("input-last-name");
+    let inputCurrentFunction = document.getElementById("input-current-function");
+    let inputAddSubmit = document.getElementById("input-add-submit");
+
+    if (inputFirstName.value == "" 
+        && inputLastName.value == "" 
+        && inputCurrentFunction.value == "") {
+            setEmpty(inputAddSubmit)
+    }
+
+    let firstNameState = false;
+    let lastNameState = false;
+    let currentFunctionState = false;
+
+    inputFirstName.addEventListener("input", (event) => {
+        if (event.inputType == "deleteContentBackward" && event.data == null) {
+            setEmpty(inputAddSubmit);
+            firstNameState = false;
+        } else {
+            firstNameState = true;
+            setButton()
+        }
+    });
+
+    inputLastName.addEventListener("input", (event) => {
+        if (event.inputType == "deleteContentBackward" && event.data == null) {
+            setEmpty(inputAddSubmit);
+            lastNameState = false;
+        } else {
+            lastNameState = true;
+            setButton()
+        }
+    });
+
+    inputCurrentFunction.addEventListener("input", (event) => {
+        if (event.inputType == "deleteContentBackward" && event.data == null) {
+            setEmpty(inputAddSubmit);
+            currentFunctionState = false;
+        } else {
+            currentFunctionState = true;
+            setButton()
+        }
+    });
+
+    function setButton() {
+        if (firstNameState && lastNameState && currentFunctionState) {
+            inputAddSubmit.style.opacity = "1";
+            inputAddSubmit.removeAttribute("disabled");      
+        }
+    }
 }
-
-
 
 
 
@@ -177,15 +231,30 @@ function ajaxAddForm() {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if(xhr.readyState == 4 && xhr.status == 200) {
-                handleResponse(xhr.responseText);
+                let data = JSON.parse(xhr.responseText);
+                if (data["not filled"] == 1) {
+                    handleNotFilled(data);                    
+                } else if (data["exists"] != 1) {
+                    handleResponse(data);
+                } else {
+                    handleExists(data);
+                }
             }
         }
         xhr.send(parameters);
     }
 
-    function handleResponse(response) {
-        let data = JSON.parse(response);
+    function sanitizeName(name) {
+        // replaces spaces at start and end of string
+        // and capitalizes first character
+        function capitalizeFirst(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        let strName = capitalizeFirst(name.replace(/^\s+|\s+$/g, ''));
+        return strName;
+    }
 
+    function handleResponse(data) {
         let firstName = document.getElementById("input-first-name");
         let lastName = document.getElementById("input-last-name");
         let nameVariants = document.getElementById("input-name-variants");
@@ -193,18 +262,68 @@ function ajaxAddForm() {
         let previousFunctions = document.getElementById("input-previous-functions");
         let textIdString = document.getElementById("text-id-string");
 
+        strFirstName = sanitizeName(firstName.value);
+        strLastName = sanitizeName(lastName.value);
+
         let idString = data[0]['identification_string'];
-        let name = firstName.value + " " + lastName.value;
-        let stringContent = 'The Identification String for the politician ' +
-                             name + ' is ' + 
-                             '<span class="input-id-string">' + idString + '</span>.';
-        
+        let name = strFirstName + " " + strLastName;
+        let stringContent = `The Identification String for the politician ${name} is
+                             <span class="input-id-string">${idString}</span>.
+                             <span id="close-add-response" class="input-close-result">×</span>`;
+        textIdString.innerHTML = stringContent;
+
+        let closeAddResponse = document.getElementById("close-add-response");
+        closeAddResponse.addEventListener("click", () => {
+            textIdString.innerHTML = "";
+        });
+
         firstName.value = "";
         lastName.value = "";
         nameVariants.value = "";
         currentFunction.value = "";
         previousFunctions.value = "";
+    }
+
+    function handleExists(data) {
+        let firstName = document.getElementById("input-first-name");
+        let lastName = document.getElementById("input-last-name");
+        let nameVariants = document.getElementById("input-name-variants");
+        let currentFunction = document.getElementById("input-current-function");
+        let previousFunctions = document.getElementById("input-previous-functions");
+        let textIdString = document.getElementById("text-id-string");
+
+        strFirstName = sanitizeName(firstName.value);
+        strLastName = sanitizeName(lastName.value);
+
+        let identificationString = data["identification_string"][0]["identification_string"];
+        let name = strFirstName + " " + strLastName;
+        let stringContent = `The politician ${name} is already in the database with the 
+                             Identification String <span class="input-id-string">${identificationString}</span>.
+                             <span id="close-add-exists" class="input-close-result">×</span>`;
         textIdString.innerHTML = stringContent;
+
+        let closeAddExists = document.getElementById("close-add-exists");
+        closeAddExists.addEventListener("click", () => {
+            textIdString.innerHTML = "";
+        });
+
+        firstName.value = "";
+        lastName.value = "";
+        nameVariants.value = "";
+        currentFunction.value = "";
+        previousFunctions.value = "";
+    }
+
+    function handleNotFilled(data) {
+        let textIdString = document.getElementById("text-id-string");
+        let stringContent = `first Name, last Name, and current political function must be filled.
+                             <span id="close-add-not-filled" class="input-close-result">×</span>`;
+        textIdString.innerHTML = stringContent;
+
+        let closeAddNotFilled = document.getElementById("close-add-not-filled");
+        closeAddNotFilled.addEventListener("click", () => {
+            textIdString.innerHTML = "";
+        });
     }
 }
 
