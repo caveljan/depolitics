@@ -44,7 +44,6 @@ def add_name(request):
 
 @csrf_exempt
 def search_id_string(request):
-    # TODO validate if there isn't any string in the database
     if request.method == "POST":
         identification_string = request.POST['identification_string']
         politician = list(Politician.objects.
@@ -54,7 +53,14 @@ def search_id_string(request):
                                            'name_variants',
                                            'current_function',
                                            'previous_functions'))
-        return JsonResponse(politician, safe=False)
+        if (politician):
+            return JsonResponse(politician, safe=False)
+        else:
+            not_found = {
+                'found': 0,
+                'identification_string': identification_string
+            }
+            return JsonResponse(not_found)
 
 
 def api_database(request):

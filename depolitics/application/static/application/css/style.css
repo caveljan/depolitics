@@ -210,7 +210,7 @@ Content Add
 ---------------------------*/
 .input-group {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
 }
 
 .input-group input,
@@ -295,6 +295,33 @@ Content Search
         margin-left: 5%;
     }
 }
+
+#search-found p {
+    margin-top: 60px;
+    font-size: 16px;
+}
+
+
+.input-close-result {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    line-height: 18px;
+    padding-right: 1px;
+    font-size: 12px;
+    margin-left: 15px;
+    margin-top: 3px;
+    color: hsl(0, 0%, 90%);
+    background-color: hsl(0, 0%, 30%);
+    cursor: pointer;
+}
+
+.input-close-result:hover {
+    color: hsl(0, 0%, 0%);
+    background-color: hsl(0, 0%, 70%);
+}
+
 
 
 /* --------------------------

@@ -3,8 +3,8 @@
 setActiveTab();
 clearSearchedResponse();
 expandGiftDrawer();
+disableSearchIfEmptyString();
 
-// TODO fix bug when adding twice in a row and displaying same IS
 ajaxAddForm();
 ajaxSearchForm()
 
@@ -123,6 +123,34 @@ function expandGiftDrawer() {
 }
 
 
+function disableSearchIfEmptyString() {
+    let inputSearchString = document.getElementById("input-search-string");
+    let inputSearchSubmit = document.getElementById("input-search-submit");
+
+    if (inputSearchString.value == "") {
+        setEmpty(inputSearchSubmit)
+    }
+
+    inputSearchString.addEventListener("input", (event) => {
+        if (event.inputType == "deleteContentBackward" && event.data == null) {
+            setEmpty(inputSearchSubmit);
+        } else {
+            inputSearchSubmit.style.opacity = "1";
+            inputSearchSubmit.removeAttribute("disabled");
+        }
+    });
+}
+
+
+function setEmpty(inputSearchSubmit) {
+    inputSearchSubmit.style.opacity = "0.3";
+    inputSearchSubmit.setAttribute("disabled", true);
+}
+
+
+
+
+
 // AJAX
 function ajaxAddForm() {
     let inputAddSubmit = document.getElementById("input-add-submit");
@@ -167,9 +195,9 @@ function ajaxAddForm() {
 
         let idString = data[0]['identification_string'];
         let name = firstName.value + " " + lastName.value;
-        let stringContent = 'the Identification String for the politician ' +
+        let stringContent = 'The Identification String for the politician ' +
                              name + ' is ' + 
-                             '<span class="input-id-string">' + idString + '</span>';
+                             '<span class="input-id-string">' + idString + '</span>.';
         
         firstName.value = "";
         lastName.value = "";
@@ -203,14 +231,18 @@ function ajaxSearchForm() {
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhr.onreadystatechange = function() {
             if(xhr.readyState == 4 && xhr.status == 200) {
-                handleResponse(xhr.responseText);
+                let data = JSON.parse(xhr.responseText);
+                if (data["found"] !== 0) {
+                    handleResponse(data);
+                } else {
+                    handleNotFound(data);
+                }
             }
         }
         xhr.send(parameters);
     }
 
-    function handleResponse(response) {
-        let data = JSON.parse(response);
+    function handleResponse(data) {
         let politician = {
             "firstName": data[0].first_name,
             "lastName": data[0].last_name,
@@ -218,22 +250,74 @@ function ajaxSearchForm() {
             "currentFunction": data[0].current_function,
             "previousFunctions": data[0].previous_functions
         }
-
-        console.log(politician);
-
         let firstName = document.getElementById("search-first-name");
         let lastName = document.getElementById("search-last-name");
         let nameVariants = document.getElementById("search-name-variants");
         let currentFunction = document.getElementById("search-current-function");
         let previousFunctions = document.getElementById("search-previous-functions");
+        let searchFound = document.getElementById("search-found");
         let searchResponse = document.getElementById("search-response");
+        let inputSearchString = document.getElementById("input-search-string");
+        let inputSearchSubmit = document.getElementById("input-search-submit");
 
+        setEmpty(inputSearchSubmit);
+        identificationString = inputSearchString.value;
+        inputSearchString.value = "";
+        searchFound.innerHTML = `<p>The Identification String
+                                    <span class="input-id-string">${identificationString}</span>
+                                 is assigned to the politician
+                                 <span id="close-search-response" class="input-close-result">×</span></p>`;
         searchResponse.style.display = "block";
+
+        let closeSearchResponse = document.getElementById("close-search-response");
+        closeSearchResponse.addEventListener("click", () => {
+            searchResponse.style.display = "none";
+            searchFound.innerHTML = "";
+        });
+
         firstName.innerText = politician.firstName;
         lastName.innerText = politician.lastName;
         nameVariants.innerText = politician.nameVariants;
         currentFunction.innerText = politician.currentFunction;
         previousFunctions.innerText = politician.previousFunctions;
+    }
+
+    function handleNotFound(data) {
+        let firstName = document.getElementById("search-first-name");
+        let lastName = document.getElementById("search-last-name");
+        let nameVariants = document.getElementById("search-name-variants");
+        let currentFunction = document.getElementById("search-current-function");
+        let previousFunctions = document.getElementById("search-previous-functions");
+        let searchFound = document.getElementById("search-found");
+        let searchResponse = document.getElementById("search-response");
+        let inputSearchString = document.getElementById("input-search-string");
+        let inputSearchSubmit = document.getElementById("input-search-submit");
+
+        setEmpty(inputSearchSubmit);
+        inputSearchString.value = "";
+        firstName.innerText = "";
+        lastName.innerText = "";
+        nameVariants.innerText = "";
+        currentFunction.innerText = "";
+        previousFunctions.innerText = "";
+
+        identificationString = data["identification_string"];
+        if (identificationString != "") {
+            notFoundString = `<p>The Identification String 
+                                 <span class="input-id-string">${identificationString}</span> 
+                             is not assigned, yet.
+                             <span id="close-search-not-found" class="input-close-result">×</span></p>`;
+        } else {
+            notFoundString = ""
+        }
+
+        searchResponse.style.display = "none";
+        searchFound.innerHTML = notFoundString;
+
+        let closeSearchNotFound = document.getElementById("close-search-not-found");
+        closeSearchNotFound.addEventListener("click", () => {
+            searchFound.innerHTML = "";
+        });
     }
 }
 
