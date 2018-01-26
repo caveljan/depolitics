@@ -175,6 +175,12 @@ Content About
     }
 }
 
+.depolitics-image {
+    display: block;
+    margin: 0 auto;
+    height: 250px;
+}
+
 .call-to-action {
     margin-top: 60px;
     text-align: center;
