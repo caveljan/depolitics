@@ -15,7 +15,7 @@ def fisher_yates_durstenfeld_shuffle(chars):
         index = randint(0, remaining_chars)
         remaining_chars -= 1
         chars[index], chars[remaining_chars] = chars[remaining_chars], chars[index]
-    print("shuffle", chars)
+    print('shuffle', chars)
     return chars
 
 
@@ -24,9 +24,10 @@ def get_random_char():
              "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", 
              "u", "v", "w", "x", "y", "z",
              "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
-    chars_shuffled = fisher_yates_durstenfeld_shuffle(chars)
-    chars_sampled = sample(chars_shuffled, len(chars_shuffled))
-    print("sample", chars_sampled)
+    chars_shuffled = fisher_yates_durstenfeld_shuffle(chars*2)
+    chars_sampled = sample(chars_shuffled, len(chars_shuffled)- int(len(chars_shuffled)/2))
+    print('sample', chars_sampled)
+    print('sammple ordered', sorted(chars_sampled))
     index = randint(0, len(chars)-1)
     return chars_sampled[index]
 
@@ -36,3 +37,7 @@ def make_id_string():
     for i in range(0, 8):
         idString += get_random_char()
     return idString
+
+
+id_string = make_id_string()
+print(id_string)
