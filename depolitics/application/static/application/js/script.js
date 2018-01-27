@@ -258,25 +258,26 @@ function copyCryptosOnClick() {
 
     function copyCryptoAddress(crypto, address) {
         crypto.addEventListener("click", () => {
-            let range = document.createRange();  
-            range.selectNode(crypto);  
+            let range = document.createRange();
+            range.selectNode(crypto);
             let selection = window.getSelection()
             selection.removeAllRanges();
             selection.addRange(range);
 
             try {  
-                document.execCommand('copy');
-                crypto.innerHTML = "address<br>copied";
+                if (crypto.innerHTML == address) {
+                    document.execCommand('copy');
+                }
+                crypto.innerHTML = `<span class="address-copy">address<br>copied</span>`;
                 setTimeout(function() {
                     crypto.innerText = address;
                 }, 2000);
-            } catch(err) {  
-                crypto.innerHTML = "address<br>couldn't be copied";
+            } catch(err) {
+                crypto.innerHTML = `<span class="address-copy">address<br>couldn't be copied</span>`;
                 setTimeout(function() {
                     crypto.innerText = address;
                 }, 2000);
             }
-            
             window.getSelection().removeAllRanges(); 
         });
     }
