@@ -230,6 +230,14 @@ Content Add
     color: white;
 }
 
+/* 
+Firefox font rendering bug fix
+*/
+textarea {
+   font-family: inherit;
+   font-size: inherit;
+}
+
 @media (max-width: 1100px) {
     .input-group input,
     .input-group textarea {
@@ -414,4 +422,8 @@ Content Gift
 #eth-address:hover,
 #ltc-address:hover {
     color: hsl(0, 0%, 100%);
+}
+
+.address-copy {
+    user-select: none;
 }
