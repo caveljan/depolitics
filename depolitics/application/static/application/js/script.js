@@ -5,6 +5,7 @@ clearSearchedResponse();
 expandGiftDrawer();
 disableSearchIfEmptyString();
 disableAddIfEmptyString();
+noHoverDisabledButton()
 copyCryptosOnClick();
 
 ajaxAddForm();
@@ -126,9 +127,9 @@ function expandGiftDrawer() {
 }
 
 
-function setEmpty(button) {
+function setOpacity(button) {
+
     button.style.opacity = "0.3";
-    button.setAttribute("disabled", true);
 }
 
 
@@ -141,7 +142,7 @@ function disableAddIfEmptyString() {
     if (inputFirstName.value == "" 
         || inputLastName.value == "" 
         || inputCurrentFunction.value == "") {
-            setEmpty(inputAddSubmit)
+            setOpacity(inputAddSubmit)
     }
 
     let firstNameState = false;
@@ -150,7 +151,7 @@ function disableAddIfEmptyString() {
 
     inputFirstName.addEventListener("input", (event) => {
         if (inputFirstName.value == "") {
-            setEmpty(inputAddSubmit);
+            setOpacity(inputAddSubmit);
             firstNameState = false;
         } else {
             firstNameState = true;
@@ -160,7 +161,7 @@ function disableAddIfEmptyString() {
 
     inputLastName.addEventListener("input", (event) => {
         if (inputLastName.value == "") {
-            setEmpty(inputAddSubmit);
+            setOpacity(inputAddSubmit);
             lastNameState = false;
         } else {
             lastNameState = true;
@@ -170,7 +171,7 @@ function disableAddIfEmptyString() {
 
     inputCurrentFunction.addEventListener("input", (event) => {
         if (inputCurrentFunction.value == "") {
-            setEmpty(inputAddSubmit);
+            setOpacity(inputAddSubmit);
             currentFunctionState = false;
         } else {
             currentFunctionState = true;
@@ -178,10 +179,13 @@ function disableAddIfEmptyString() {
         }
     });
 
+    inputAddSubmit.addEventListener("click", () => {
+        setOpacity(inputAddSubmit);
+    });
+
     function setButton() {
         if (firstNameState && lastNameState && currentFunctionState) {
             inputAddSubmit.style.opacity = "1";
-            inputAddSubmit.removeAttribute("disabled");      
         }
     }
 }
@@ -191,17 +195,45 @@ function disableSearchIfEmptyString() {
     let inputSearchString = document.getElementById("input-search-string");
     let inputSearchSubmit = document.getElementById("input-search-submit");
     if (inputSearchString.value.length < 8) {
-        setEmpty(inputSearchSubmit)
+        setOpacity(inputSearchSubmit)
     }
 
     inputSearchString.addEventListener("input", (event) => {
         if (inputSearchString.value.length < 8) {
-            setEmpty(inputSearchSubmit);
+            setOpacity(inputSearchSubmit);
         } else {
             inputSearchSubmit.style.opacity = "1";
             inputSearchSubmit.removeAttribute("disabled");
         }
     });
+}
+
+
+function noHoverDisabledButton() {
+    let buttons = document.getElementsByClassName("button");
+
+    for (let button of buttons) {
+        button.addEventListener("mouseenter", () => {
+            let opacity = button.style.opacity;
+            if (opacity == 0.3) {
+                button.style.backgroundColor = "hsl(0, 0%, 30%)";
+                button.style.color = "hsl(0, 0%, 90%)";
+            } else {
+                button.style.backgroundColor = "hsl(0, 0%, 70%)";
+                button.style.color = "hsl(0, 0%, 10%)";
+            }
+        });
+        button.addEventListener("mouseleave", () => {
+            let opacity = button.style.opacity;
+            if (opacity == 0.3) {
+                button.style.backgroundColor = "hsl(0, 0%, 30%)";
+                button.style.color = "hsl(0, 0%, 90%)";
+            } else {
+                button.style.backgroundColor = "hsl(0, 0%, 30%)";
+                button.style.color = "hsl(0, 0%, 90%)";
+            }
+        })
+    }
 }
 
 
@@ -305,6 +337,18 @@ function ajaxAddForm() {
         return strName;
     }
 
+    function handleNotFilled(data) {
+        let textIdString = document.getElementById("text-id-string");
+        let stringContent = `first Name, last Name, and current political function must be filled.
+                             <span id="close-add-not-filled" class="input-close-result">×</span>`;
+        textIdString.innerHTML = stringContent;
+
+        let closeAddNotFilled = document.getElementById("close-add-not-filled");
+        closeAddNotFilled.addEventListener("click", () => {
+            textIdString.innerHTML = "";
+        });
+    }
+
     function handleResponse(data) {
         let firstName = document.getElementById("input-first-name");
         let lastName = document.getElementById("input-last-name");
@@ -364,18 +408,6 @@ function ajaxAddForm() {
         currentFunction.value = "";
         previousFunctions.value = "";
     }
-
-    function handleNotFilled(data) {
-        let textIdString = document.getElementById("text-id-string");
-        let stringContent = `first Name, last Name, and current political function must be filled.
-                             <span id="close-add-not-filled" class="input-close-result">×</span>`;
-        textIdString.innerHTML = stringContent;
-
-        let closeAddNotFilled = document.getElementById("close-add-not-filled");
-        closeAddNotFilled.addEventListener("click", () => {
-            textIdString.innerHTML = "";
-        });
-    }
 }
 
 
@@ -402,54 +434,28 @@ function ajaxSearchForm() {
         xhr.onreadystatechange = function() {
             if(xhr.readyState == 4 && xhr.status == 200) {
                 let data = JSON.parse(xhr.responseText);
-                if (data["found"] !== 0) {
-                    handleResponse(data);
-                } else {
+                if (data["not filled"] == 1) {
+                    handleNotFilled(data);
+                } else if (data["not found"] == 1) {
                     handleNotFound(data);
+                } else {
+                    handleResponse(data);
                 }
             }
         }
         xhr.send(parameters);
     }
 
-    function handleResponse(data) {
-        let politician = {
-            "firstName": data[0].first_name,
-            "lastName": data[0].last_name,
-            "nameVariants": data[0].name_variants,
-            "currentFunction": data[0].current_function,
-            "previousFunctions": data[0].previous_functions
-        }
-        let firstName = document.getElementById("search-first-name");
-        let lastName = document.getElementById("search-last-name");
-        let nameVariants = document.getElementById("search-name-variants");
-        let currentFunction = document.getElementById("search-current-function");
-        let previousFunctions = document.getElementById("search-previous-functions");
-        let searchFound = document.getElementById("search-found");
-        let searchResponse = document.getElementById("search-response");
-        let inputSearchString = document.getElementById("input-search-string");
-        let inputSearchSubmit = document.getElementById("input-search-submit");
+    function handleNotFilled(data) {
+        let searchFoundDiv = document.getElementById("search-found");
+        let stringContent = `<p>An Identification String must be provided.
+                             <span id="close-search-not-filled" class="input-close-result">×</span></p>`;
+        searchFoundDiv.innerHTML = stringContent;
 
-        setEmpty(inputSearchSubmit);
-        identificationString = inputSearchString.value;
-        inputSearchString.value = "";
-        searchFound.innerHTML = `<p>The Identification String
-                                    <span class="input-id-string">${identificationString}</span>
-                                 is assigned to the politician
-                                 <span id="close-search-response" class="input-close-result">×</span></p>`;
-        searchResponse.style.display = "block";
-
-        let closeSearchResponse = document.getElementById("close-search-response");
-        closeSearchResponse.addEventListener("click", () => {
-            searchResponse.style.display = "none";
-            searchFound.innerHTML = "";
+        let closeSearchNotFilled = document.getElementById("close-search-not-filled");
+        closeSearchNotFilled.addEventListener("click", () => {
+            searchFoundDiv.innerHTML = "";
         });
-
-        firstName.innerText = politician.firstName;
-        lastName.innerText = politician.lastName;
-        nameVariants.innerText = politician.nameVariants;
-        currentFunction.innerText = politician.currentFunction;
-        previousFunctions.innerText = politician.previousFunctions;
     }
 
     function handleNotFound(data) {
@@ -463,7 +469,7 @@ function ajaxSearchForm() {
         let inputSearchString = document.getElementById("input-search-string");
         let inputSearchSubmit = document.getElementById("input-search-submit");
 
-        setEmpty(inputSearchSubmit);
+        setOpacity(inputSearchSubmit);
         inputSearchString.value = "";
         firstName.innerText = "";
         lastName.innerText = "";
@@ -488,6 +494,46 @@ function ajaxSearchForm() {
         closeSearchNotFound.addEventListener("click", () => {
             searchFound.innerHTML = "";
         });
+    }
+
+    function handleResponse(data) {
+        let politician = {
+            "firstName": data[0].first_name,
+            "lastName": data[0].last_name,
+            "nameVariants": data[0].name_variants,
+            "currentFunction": data[0].current_function,
+            "previousFunctions": data[0].previous_functions
+        }
+        let firstName = document.getElementById("search-first-name");
+        let lastName = document.getElementById("search-last-name");
+        let nameVariants = document.getElementById("search-name-variants");
+        let currentFunction = document.getElementById("search-current-function");
+        let previousFunctions = document.getElementById("search-previous-functions");
+        let searchFound = document.getElementById("search-found");
+        let searchResponse = document.getElementById("search-response");
+        let inputSearchString = document.getElementById("input-search-string");
+        let inputSearchSubmit = document.getElementById("input-search-submit");
+
+        setOpacity(inputSearchSubmit);
+        identificationString = inputSearchString.value;
+        inputSearchString.value = "";
+        searchFound.innerHTML = `<p>The Identification String
+                                    <span class="input-id-string">${identificationString}</span>
+                                 is assigned to the politician
+                                 <span id="close-search-response" class="input-close-result">×</span></p>`;
+        searchResponse.style.display = "block";
+
+        let closeSearchResponse = document.getElementById("close-search-response");
+        closeSearchResponse.addEventListener("click", () => {
+            searchResponse.style.display = "none";
+            searchFound.innerHTML = "";
+        });
+
+        firstName.innerText = politician.firstName;
+        lastName.innerText = politician.lastName;
+        nameVariants.innerText = politician.nameVariants;
+        currentFunction.innerText = politician.currentFunction;
+        previousFunctions.innerText = politician.previousFunctions;
     }
 }
 

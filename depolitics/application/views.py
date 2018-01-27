@@ -21,7 +21,6 @@ def index(request):
 
 
 def add_name(request):
-    # TODO, check that first_name, last_name, and current_function are not ""
     if request.method == "POST":
         first_name = request.POST['first_name']
         last_name = request.POST['last_name']
@@ -67,6 +66,13 @@ def add_name(request):
 def search_id_string(request):
     if request.method == "POST":
         identification_string = request.POST['identification_string']
+
+        if identification_string == "":
+            not_filled = {
+                'not filled': 1,
+            }
+            return JsonResponse(not_filled)
+
         politician = list(Politician.objects \
                                     .filter(identification_string=identification_string) \
                                     .values('first_name',
@@ -78,7 +84,7 @@ def search_id_string(request):
             return JsonResponse(politician, safe=False)
         else:
             not_found = {
-                'found': 0,
+                'not found': 1,
                 'identification_string': identification_string
             }
             return JsonResponse(not_found)
