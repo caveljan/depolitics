@@ -272,8 +272,10 @@ Content Add
 
 .button:hover {
     cursor: pointer;
-    background-color: hsl(0, 0%, 70%);
-    color: hsl(0, 0%, 10%);
+    /* 
+    colors handled by JavaScript in
+    noHoverDisabledButton()
+     */
 }
 
 #text-id-string {
