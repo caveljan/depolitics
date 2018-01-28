@@ -49,4 +49,32 @@ To use a trie for full text search indexing.
 
 
 ## Future
-To put it on the blockchain? The advantages do not seem so big, beyond having a freed database. And what could be the edit mechanism?
+To put it on the blockchain.
+
+The advantages: a freed database.
+
+The edit mechanism: reinforce the consented version through the blockchain.
+
+---
+
+To have for each politician two other input fields: Deeds and Opinions.
+
+Deeds
+based on perception value: positive, negative, neutral
+
+
+Opinions
++ Place of Being: What is the place of the human, a being living around 70 years, in a universe which appeared 14 billion years ago. (who are we?)
+
++ Place of Work: The universe is without-(a)-meaning, without-(a)-why. And yet we derive meaning from our actions. What is the source of meaning, to what should we change it. How do we ground our why. (what should we do?)
+
++ Place of Boundary: We are in movement, in growth, for better, for worse. We are responsible for our actions, but also for the limits we impose on the degrees of freedom an action should have. Where should we stop. (what should we know?)
+
++ Place of Faith: Species disappear. The human is a species. What is the entity, concept, thing in which you place your faith the human will not disappear. (what can we hope for?)
+
++ Place of Contingency: We are the result of past events. They could have been different, turning us  different. What do you account for all the untaken paths. (what we could have been?, who should we become?)
+
+
+## TODOs
+
+Edit from search for admins.
