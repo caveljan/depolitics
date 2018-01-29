@@ -17,5 +17,6 @@ function extractText() {
         }
     }
 
-    console.log("capitalized words", capitalizedWords);
+    // console.log("capitalized words", capitalizedWords);
+    return capitalizedWords;
 }
