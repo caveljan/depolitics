@@ -50,7 +50,22 @@ function replaceText(text, database) {
                 let identificationString = database[i]["identification_string"];
                 let firstName = database[i]["first_name"];
                 let lastName = database[i]["last_name"];
+                let currentFunction = database[i]["current_function"];
+                let previousFunctions = database[i]["previous_functions"];
                 let name_variants = database[i]["name_variants"];
+                let identificationSpan = `<span class="depolitics-is">${identificationString}
+                                            <span class="depolitics-card">
+                                                <p>current function<br><i>${currentFunction}</i></p>
+                                                <p>previous functions<br><i>${previousFunctions}</i></p>
+                                                <p>
+                                                    <span class="depolitics-wiki"><a target="_blank" href="https://en.wikipedia.org/wiki/${firstName}_${lastName}">wiki</a></span>
+                                                    <span class="depolitics-identity">
+                                                        <span class="depolitics-identity-text">identity</span>
+                                                        <span class="depolitics-identity-show"></span>
+                                                    </span>
+                                                </p>
+                                            </span>
+                                          </span>`;
 
                 if (name_variants) {
                     name_variants = name_variants.split(",").map(item => item.trim());
@@ -58,51 +73,53 @@ function replaceText(text, database) {
                 // console.log(name_variants);
 
                 for (let k=0; k < name_variants.length; k++) {
-                    $("*").replaceText(name_variants[k], identificationString);
+                    $("*").replaceText(name_variants[k], identificationSpan);
                 }
                 
                 let politicianFullName = `${firstName} ${lastName}`;
-                $("*").replaceText(politicianFullName, identificationString);
+                $("*").replaceText(politicianFullName, identificationSpan);
 
-                $("*").replaceText(politicianLastName, identificationString);            
+                $("*").replaceText(politicianLastName, identificationSpan);            
             }
         }
     }
 
+    setEventsListeners()
+}
 
 
-    // for (let i=0; i < text.length; i++) {
-    //     for(let j=0; j < database.length; j++) {
-    //         if (database[j]["last_name"] == text[i]) {
-    //             let identificationString = database[j]["identification_string"];
 
-    //             // makes an array out of name_variants, removing commas and spaces 
-    //             let name_variants = database[j]["name_variants"]
-    //                                                     .split(",")
-    //                                                     .map(item => item.trim());
-    //             // console.log(name_variants);
+function setEventsListeners() {
+    let depoliticsIsSpans = document.getElementsByClassName("depolitics-is");
 
-    //             for (let k=0; k < name_variants.length; k++) {
-    //                 name_variant = name_variants[k].split(" ");
-    //                 let length = name_variant.length;
-    //                 if (name_variant[length - 1] == text[i] &&
-    //                     name_variant[length - 2] == text[i-1] &&
-    //                     name_variant[length - 3] == text[i-2]) {
-    //                     // console.log(k, name_variant);
-    //                     $("*").replaceText(name_variants[k], identificationString);
-    //                 }
-    //             }
-                
-    //             if (database[j]["first_name"] == text[i-1]) {
-    //                 let politicianFullName = text[i-1] + " " + text[i];
-    //                 $("*").replaceText(politicianFullName, identificationString);
-    //             }
+    for (let i = 0; i < depoliticsIsSpans.length; i++) {
+        depoliticsIsSpans[i].addEventListener("mouseenter", (event) => {
+            depoliticsIsSpans[i].children[0].style.display = "block"
+        });
 
-    //             if (database[j]["first_name"] != text[i-1]) {
-    //                 let politicianLastName = text[i];
-    //                 $("*").replaceText(politicianLastName, identificationString);                    
-    //             }
-    //         }
-    //     }
-    // }
+        depoliticsIsSpans[i].addEventListener("mouseleave", (event) => {
+            depoliticsIsSpans[i].children[0].style.display = "none"
+        });
+    }
+
+
+    let depoliticsIdentitySpans = document.getElementsByClassName("depolitics-identity");
+
+    for (let i = 0; i < depoliticsIdentitySpans.length; i++) {
+        depoliticsIdentitySpans[i].addEventListener("click", (event) => {
+            depoliticsIdentitySpans[i].children[0].style.display = "none";
+            depoliticsIdentitySpans[i].children[1].style.display = "block";
+            let politicianName = depoliticsIdentitySpans[i].parentElement.children[0].children[0].href
+            let regExp = /\/(\w+)_(\w+)/;
+            let firstName = politicianName.match(regExp)[1];
+            let lastName = politicianName.match(regExp)[2];
+
+            depoliticsIdentitySpans[i].children[1].innerText = `${firstName} ${lastName}`;
+            
+            setTimeout(function() { 
+                depoliticsIdentitySpans[i].children[0].style.display = "block";
+                depoliticsIdentitySpans[i].children[1].style.display = "none";
+            }, 2000);
+        });
+    }
 }

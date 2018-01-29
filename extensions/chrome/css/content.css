@@ -1,0 +1,56 @@
+.depolitics-is {
+    position: relative;
+    cursor: pointer;
+}
+
+.depolitics-card {
+    /*margin-top: 20px;*/
+    position: absolute;
+    top: 15px;
+    left: 50%;
+    transform: translate(-50%, 0);
+    min-height: 80px;
+    width: 200px;
+    display: none;
+    background-color: hsl(0, 0%, 10%);
+    color: white;
+    font-size: 12px !important;
+    line-height: 1.6;
+    text-align: left;
+    overflow-y: auto;
+    padding: 20px;
+    z-index: 99999;
+}
+
+.depolitics-card p {
+    margin-bottom: 20px;
+}
+
+.depolitics-card p:last-child {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+.depolitics-wiki {
+    float: left;
+}
+
+.depolitics-identity {
+    float: right;
+}
+
+.depolitics-wiki a,
+.depolitics-identity {
+    color: hsl(0, 0%, 60%) !important;
+}
+
+.depolitics-wiki a:hover,
+.depolitics-identity:hover {
+    color: hsl(0, 0%, 100%);
+    text-decoration: none;
+}
+
+
+.depolitics-identity-show {
+    display: none;
+}
