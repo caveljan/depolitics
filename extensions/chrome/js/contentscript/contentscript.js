@@ -47,10 +47,8 @@ function _main(options, database) {
     }
 
     if (options['activeOptions'] == "onWiki" && isWiki) {
-        extractText();
+        replaceText(extractText(), database);
     } else if (options['activeOptions'] == "onSite") {
-        extractText();
+        replaceText(extractText(), database);
     }
-
-    console.log("database", database);
 }
