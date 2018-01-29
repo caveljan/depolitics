@@ -1,11 +1,21 @@
-// Extract the text from body and place it into an array
+// Extract the text from body and place the capitalized words into an array
 function extractText() {
     var bodyText = document.getElementsByTagName("body")[0].innerText;
-    // bodyText = bodyText.replace(/(\r\n|\n|\r)/gm," ");
-    console.log(bodyText);
+    bodyText = bodyText.replace(/(\r\n|\n|\r)/gm," ");
+    // console.log(bodyText);
 
-    // var bodyTextArray = [];
-    // bodyTextArray = $.each(bodyText.split(" ").slice(0,-1), function(index, item) { });
+    let bodyTextArray = [];
+    bodyTextArray = bodyText.split(" ");
     // console.log(bodyTextArray);
-    // return bodyTextArray;
+
+    let capitalizedWords = [];
+    let regexp = /^[A-Z]/;
+
+    for (let word of bodyTextArray) {
+        if (regexp.test(word)) {
+            capitalizedWords.push(word);
+        }
+    }
+
+    console.log("capitalized words", capitalizedWords);
 }

@@ -1,15 +1,17 @@
 // Get the options from chrome.storage and call main with options as parameter
-chrome.storage.sync.get(['activeOptions'], function(element) {
-    var options = {};
-    var activeOptions = element['activeOptions'];
+getDatabase();
+
+chrome.storage.sync.get(['activeOptions', 'database'], function(element) {
+    let options = {};
+    let activeOptions = element['activeOptions'];
+    let database = element['database']; 
 
     options['activeOptions'] = activeOptions;
-    _main(options);
+    _main(options, database);
 });
 
 
-// main function calling replacementrules with chained function-parameter
-function _main(options) {
+function _main(options, database) {
     // Ben Alman's replaceText plugin
     // http://www.benalman.com/projects/jquery-replacetext-plugin/
     $.fn.replaceText = function(search, replace, text_only) {
@@ -49,4 +51,6 @@ function _main(options) {
     } else if (options['activeOptions'] == "onSite") {
         extractText();
     }
+
+    console.log("database", database);
 }
