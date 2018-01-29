@@ -6,7 +6,7 @@ function extractText() {
 
     let bodyTextArray = [];
     bodyTextArray = bodyText.split(" ");
-    // console.log(bodyTextArray);
+    // console.log("words in page", bodyTextArray);
 
     let capitalizedWords = [];
     let regexp = /^[A-Z]/;
