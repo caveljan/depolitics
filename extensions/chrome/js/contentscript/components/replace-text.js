@@ -32,50 +32,39 @@ function replaceText(text, database) {
     // console.log("database", database);
 
     let textSet = new Set(text);
-    // console.log(textSet);
+    // console.log("text set", textSet);
 
-    let databaseLastNames = new Set()
+    let databaseLastNames = new Set();
     for (let i=0; i < database.length; i++) {
         databaseLastNames.add(database[i]["last_name"]);
     }
     // console.log(databaseLastNames);
 
     let textDatabaseIntersection = new Set([...textSet].filter(x => databaseLastNames.has(x)));
-    console.log(textDatabaseIntersection)
-
+    // console.log("intersection", textDatabaseIntersection);
 
     for(let politicianLastName of textDatabaseIntersection) {
         // console.log(politicianLastName);
-        for (let i=0; i <database.length; i++) {
+        for (let i=0; i < database.length; i++) {
             if (database[i]["last_name"] == politicianLastName) {
                 let identificationString = database[i]["identification_string"];
+                let firstName = database[i]["first_name"];
+                let lastName = database[i]["last_name"];
+                let name_variants = database[i]["name_variants"];
 
-                // makes an array out of name_variants, removing commas and spaces 
-                let name_variants = database[i]["name_variants"]
-                                                        .split(",")
-                                                        .map(item => item.trim());
+                if (name_variants) {
+                    name_variants = name_variants.split(",").map(item => item.trim());
+                }
                 // console.log(name_variants);
 
-                // for (let k=0; k < name_variants.length; k++) {
-                //     name_variant = name_variants[k].split(" ");
-                //     let length = name_variant.length;
-                //     if (name_variant[length - 1] == text[i] &&
-                //         name_variant[length - 2] == text[i-1] &&
-                //         name_variant[length - 3] == text[i-2]) {
-                //         // console.log(k, name_variant);
-                //         $("*").replaceText(name_variants[k], identificationString);
-                //     }
-                // }
+                for (let k=0; k < name_variants.length; k++) {
+                    $("*").replaceText(name_variants[k], identificationString);
+                }
                 
-                // if (database[i]["first_name"] == text[i-1]) {
-                //     let politicianFullName = text[i-1] + " " + text[i];
-                //     $("*").replaceText(politicianFullName, identificationString);
-                // }
+                let politicianFullName = `${firstName} ${lastName}`;
+                $("*").replaceText(politicianFullName, identificationString);
 
-                // if (database[i]["first_name"] != text[i-1]) {
-                    // let politicianLastName = text[i];
-                    $("*").replaceText(politicianLastName, identificationString);                    
-                // }
+                $("*").replaceText(politicianLastName, identificationString);            
             }
         }
     }
