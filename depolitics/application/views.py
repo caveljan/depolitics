@@ -91,17 +91,13 @@ def search_id_string(request):
 
 
 def api_database(request):
-    politicians = list(Politician.objects.all().values())
+    politicians = list(Politician.objects.all().values().order_by('last_name'))
     return JsonResponse(politicians, safe=False)
 
 
 def api_search(request):
     identification_string = request.GET.get('identification_string', '')
-    politician = list(Politician.objects.
-                                filter(identification_string=identification_string).
-                                values('first_name',
-                                       'last_name',
-                                       'name_variants',
-                                       'current_function',
-                                       'previous_functions'))
+    politician = list(Politician.objects
+                                .filter(identification_string=identification_string)
+                                .values())
     return JsonResponse(politician, safe=False)
