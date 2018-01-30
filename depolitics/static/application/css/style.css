@@ -413,14 +413,14 @@ Content Gift
 
 #btc-address,
 #eth-address,
-#ltc-address {
+#bch-address {
     color: hsl(0, 0%, 50%);
     cursor: pointer;
 }
 
 #btc-address:hover,
 #eth-address:hover,
-#ltc-address:hover {
+#bch-address:hover {
     color: hsl(0, 0%, 100%);
 }
 
