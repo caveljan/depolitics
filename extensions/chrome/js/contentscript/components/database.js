@@ -1,4 +1,17 @@
 function getDatabase() {
+    // setDatabase();
+    chrome.storage.sync.get(['database'], function(element) {
+        let database = element['database'];
+        console.log(database);
+        if (!database) {
+            console.log('set db')
+            setDatabase()
+        }
+    });
+}
+
+
+function setDatabase() {
     let xhr = new XMLHttpRequest();
     let url = "https://depolitics.org/api/database";
 
@@ -16,4 +29,3 @@ function getDatabase() {
 
     xhr.send();
 }
-

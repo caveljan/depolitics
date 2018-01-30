@@ -1,5 +1,9 @@
 // Get the options from chrome.storage and call main with options as parameter
+// setTimeout(function(){
 getDatabase();
+// console.log('got database');
+// }, 5000);
+
 
 chrome.storage.sync.get(['activeOptions', 'database'], function(element) {
     let options = {};

@@ -8,6 +8,11 @@ function extractText() {
     bodyTextArray = bodyText.split(" ");
     // console.log("words in page", bodyTextArray);
 
+    // Intead of extracting the capitalized words
+    // to use an AI parser that detects the probability of the word being a (human) Name
+    // return artificialInteligenceParser(bodyTextArray)
+    // returns an array of 0.95+ probability of the word being a name
+
     let capitalizedWords = [];
     let regexp = /^[A-Z]/;
 

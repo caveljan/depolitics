@@ -37,11 +37,12 @@ function replaceText(text, database) {
     let databaseLastNames = new Set();
     for (let i=0; i < database.length; i++) {
         databaseLastNames.add(database[i]["last_name"]);
+        // console.log("h");
     }
     // console.log(databaseLastNames);
 
     let textDatabaseIntersection = new Set([...textSet].filter(x => databaseLastNames.has(x)));
-    // console.log("intersection", textDatabaseIntersection);
+    console.log("intersection", textDatabaseIntersection);
 
     for(let politicianLastName of textDatabaseIntersection) {
         // console.log(politicianLastName);
@@ -68,18 +69,24 @@ function replaceText(text, database) {
                                           </span>`;
 
                 if (name_variants) {
+                    // console.log("a", name_variants)
                     name_variants = name_variants.split(",").map(item => item.trim());
+                    // console.log("b", name_variants)
                 }
                 // console.log(name_variants);
 
-                for (let k=0; k < name_variants.length; k++) {
-                    $("*").replaceText(name_variants[k], identificationSpan);
-                }
+                // BUG with exceeding stack
+                // for (let k=0; k < name_variants.length; k++) {
+                //     $("*").replaceText(name_variants[k], identificationSpan);
+                //     console.log("a");
+                // }
                 
                 let politicianFullName = `${firstName} ${lastName}`;
                 $("*").replaceText(politicianFullName, identificationSpan);
+                // console.log("b");
 
                 $("*").replaceText(politicianLastName, identificationSpan);            
+                // console.log("c");
             }
         }
     }
