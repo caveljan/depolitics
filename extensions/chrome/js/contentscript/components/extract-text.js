@@ -4,14 +4,30 @@ function extractText() {
     bodyText = bodyText.replace(/(\r\n|\n|\r)/gm," ");
     // console.log(bodyText);
 
+    let timeStart = new Date();
+    console.log("start");
+    // compromise NLP, 3-5 seconds, too slow
+    // let x = nlp(bodyText).people().out('array');
+    let x = nlp(bodyText).people().normalize().out('text');
+    x = new Set(x.split(" "));
+    console.log(x);
+
+    // let doc = nlp(bodyText).nouns();
+    // let docs = doc.match('#LastName');
+    // console.log(docs.out('array'));
+    let timeEnd = new Date();
+    console.log(timeEnd - timeStart);
+
+
+
     let bodyTextArray = [];
     bodyTextArray = bodyText.split(" ");
     // console.log("words in page", bodyTextArray);
 
     // Intead of extracting the capitalized words
-    // to use an AI parser that detects the probability of the word being a (human) Name
-    // return artificialInteligenceParser(bodyTextArray)
-    // returns an array of 0.95+ probability of the word being a name
+    // to use a NER (Named Entity Recognition) to the detect words being a Person
+    // return ner(bodyTextArray)
+    // returns an array of 0.95+ probability of the word (group of words) being a Person
 
     let capitalizedWords = [];
     let regexp = /^[A-Z]/;
@@ -22,6 +38,6 @@ function extractText() {
         }
     }
 
-    // console.log("capitalized words", capitalizedWords);
-    return capitalizedWords;
+    console.log("capitalized words", capitalizedWords);
+    return x;
 }
