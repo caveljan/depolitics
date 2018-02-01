@@ -10,7 +10,6 @@ function getDatabase() {
     });
 }
 
-
 function setDatabase() {
     let xhr = new XMLHttpRequest();
     let url = "https://depolitics.org/api/database";

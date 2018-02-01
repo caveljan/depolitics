@@ -76,10 +76,10 @@ function replaceText(text, database) {
                 // console.log(name_variants);
 
                 // BUG with exceeding stack
-                // for (let k=0; k < name_variants.length; k++) {
-                //     $("*").replaceText(name_variants[k], identificationSpan);
-                //     console.log("a");
-                // }
+                for (let k=0; k < name_variants.length; k++) {
+                    $("*").replaceText(name_variants[k], identificationSpan);
+                    console.log("a");
+                }
                 
                 let politicianFullName = `${firstName} ${lastName}`;
                 $("*").replaceText(politicianFullName, identificationSpan);
