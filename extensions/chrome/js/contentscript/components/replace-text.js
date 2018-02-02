@@ -26,8 +26,45 @@ $.fn.replaceText = function(search, replace, text_only) {
     });
 };
 
+// pick the first cluster
+// find names in the first cluster
+// make a set of names in the first cluster
+// make intersection of names in set with names in database
+// with the result change names on the web page
+// pick the second cluster
+// find names in the second cluster
+// make set of names in the second cluster
+// determine what is in the second set and not in the first set
+// with the second set make intersection with database 
 
-function replaceText(text, database) {
+
+function replaceText(database) {
+    console.log(database);
+    let timeStart = new Date();
+    console.log("start");
+
+    let bodyText = textClusterIterator(extractText())
+
+    // if (!bodyText.next().done) {
+        // if iterator not done
+        // make replacements
+    let cluster = bodyText.next().value;
+    console.log(cluster);
+    // }
+
+    let peopleCluster = nlp(cluster).people().normalize().out('text');
+    console.log("A", peopleCluster);
+    peopleCluster = new Set(peopleCluster.split(" "));
+    console.log("B", peopleCluster);
+    replaceNames(peopleCluster, database);
+
+
+    let timeEnd = new Date();
+    console.log(timeEnd - timeStart);
+}
+
+
+function replaceNames(text, database) {
     // console.log("array of text", text);
     // console.log("database", database);
 
