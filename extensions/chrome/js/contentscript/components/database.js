@@ -2,7 +2,7 @@ function getDatabase() {
     // setDatabase();
     chrome.storage.sync.get(['database'], function(element) {
         let database = element['database'];
-        console.log(database);
+        // console.log(database);
         if (!database) {
             console.log('set db')
             setDatabase()
