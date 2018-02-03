@@ -1,5 +1,4 @@
 /* OPTIONS */
-
 html {
     margin: auto;
 }
@@ -23,26 +22,26 @@ h1 {
     margin:0;
 }
 
-.OptionsField {
+.options-field {
     padding-bottom: 15px;
     font-size: 12px;
     line-height: 200%;
 }
 
-.OptionsField label {
+.options-field label {
     padding-left: 5px;
 }
 
-.TopTextField p {
+.top-text-field p {
     margin-top: 0px;
     text-align: justify;
 }
 
-.BottomTextField {
+.text-field {
     padding-top: 5px;
 }
 
-.spanDefault {
+.span-default {
     color: hsl(0, 0%, 50%);
 }
 
@@ -80,7 +79,8 @@ a:hover {
     font-size: 12px;
 }
 
-#status-save,
-#status-default {
+#status-message {
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: center;
 }

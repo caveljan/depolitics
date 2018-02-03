@@ -4,13 +4,14 @@ function getDatabase() {
         let database = element['database'];
         // console.log(database);
         if (!database) {
-            console.log('set db')
-            setDatabase()
+            console.log('set db');
+            setDatabase();
         }
     });
 }
 
 function setDatabase() {
+    // console.log("B");
     let xhr = new XMLHttpRequest();
     let url = "https://depolitics.org/api/database";
 
