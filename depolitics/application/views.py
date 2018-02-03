@@ -90,6 +90,29 @@ def search_id_string(request):
             return JsonResponse(not_found)
 
 
+def edit_id_string(request):
+    if request.method == "POST":
+        identification_string = request.POST['identification_string']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
+        name_variants = request.POST['name_variants']
+        current_function = request.POST['current_function']
+        previous_functions = request.POST['previous_functions']
+
+        politician = Politician.objects.get(identification_string=identification_string)
+        politician.first_name = first_name
+        politician.last_name = last_name
+        politician.name_variants = name_variants
+        politician.current_function = current_function
+        politician.previous_functions = previous_functions
+        politician.save()
+
+        edit = {
+            'edit': 1,
+        }
+        return JsonResponse(edit)
+
+
 def api_database(request):
     politicians = list(Politician.objects.all().values().order_by('last_name'))
     return JsonResponse(politicians, safe=False)

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from .settings_secret import *
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,9 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'vjm)n63vg)3j7qvofi55#2o46#^)ljou@pwvij5)is4u)r*)@&'
-# with open('./.environ') as f:
-    # SECRET_KEY = f.read().strip()
+SECRET_KEY = secret_SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -79,11 +78,24 @@ WSGI_APPLICATION = 'depolitics.wsgi.application'
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': secret_DB_ENGINE,
+        'NAME': secret_DB_NAME,
+        'USER': secret_DB_USER,
+        'PASSWORD': secret_DB_PASSWORD,
+        'PORT': secret_DB_PORT
     }
 }
+
+DATABASES['default']['HOST'] = secret_DB_CLOUD
+if os.getenv('GAE_INSTANCE'):
+    pass
+else:
+    DATABASES['default']['HOST'] = '127.0.0.1'
 
 
 # Password validation
@@ -122,6 +134,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
+# STATIC_URL = '/static/'
 STATIC_URL = 'https://storage.googleapis.com/depolitics-org/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATICFILES_DIRS = (
@@ -134,6 +147,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 # Deployment specifics
-# CSRF_COOKIE_SECURE = True
-# SESSION_COOKIE_SECURE = True
-# SESSION_ENGINE = 'django.contrib.sessions.backends.cache'
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_SSL_REDIRECT = True
+
+
+# Testing
+# SESSION_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
+# SECURE_SSL_REDIRECT = False
