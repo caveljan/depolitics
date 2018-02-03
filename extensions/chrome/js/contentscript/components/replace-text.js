@@ -26,6 +26,7 @@ $.fn.replaceText = function(search, replace, text_only) {
     });
 };
 
+
 // pick the first cluster
 // find names in the first cluster
 // make a set of names in the first cluster
@@ -39,34 +40,68 @@ $.fn.replaceText = function(search, replace, text_only) {
 
 
 function replaceText(database) {
-    console.log(database);
-    let timeStart = new Date();
-    console.log("start");
-
+    // console.log(database);
     let bodyText = textClusterIterator(extractText())
 
-    // if (!bodyText.next().done) {
-        // if iterator not done
-        // make replacements
+    let possiblePeople = new Set();
+
+    let timeStart = new Date();
+    // console.log("start");
+
     let cluster = bodyText.next().value;
-    console.log(cluster);
-    // }
+    // console.log("cluster", cluster);
 
     let peopleCluster = nlp(cluster).people().normalize().out('text');
-    console.log("A", peopleCluster);
     peopleCluster = new Set(peopleCluster.split(" "));
-    console.log("B", peopleCluster);
-    replaceNames(peopleCluster, database);
+    let newPeople = new Set([...peopleCluster].filter(x => !possiblePeople.has(x)));
+    possiblePeople = new Set([...possiblePeople, ...peopleCluster]);
 
+    // console.log("peopleCluster", peopleCluster);
+    // console.log("newPeople", newPeople);
+    // console.log("possiblePeople", possiblePeople);
+    replaceNames(newPeople, database);
 
     let timeEnd = new Date();
-    console.log(timeEnd - timeStart);
+    // console.log(timeEnd - timeStart);
+
+
+
+
+
+    // let timeStart = new Date();
+    // console.log("start LOOP");
+
+    // for (let cluster of bodyText) {
+    //     // let cluster = bodyText.next().value;
+    //     let timeStart = new Date();
+    //     console.log("start");
+    //     // console.log(cluster);
+
+    //     let peopleCluster = nlp(cluster).people().normalize().out('text');
+    //     peopleCluster = new Set(peopleCluster.split(" "));
+    //     let newPeople = new Set([...peopleCluster].filter(x => !possiblePeople.has(x)));
+    //     possiblePeople = new Set([...possiblePeople, ...peopleCluster]);
+
+    //     console.log("peopleCluster", peopleCluster);
+    //     console.log("newPeople", newPeople);
+    //     console.log("possiblePeople", possiblePeople);
+    //     replaceNames(newPeople, database);
+
+    //     let timeEnd = new Date();
+    //     console.log(timeEnd - timeStart);
+    //     console.log("end");
+    // }
+
+    // let timeEnd = new Date();
+    // console.log(timeEnd - timeStart);
+    // console.log("end LOOP");
 }
 
 
 function replaceNames(text, database) {
     // console.log("array of text", text);
     // console.log("database", database);
+    // console.log("HERE");
 
     let textSet = new Set(text);
     // console.log("text set", textSet);
@@ -79,7 +114,7 @@ function replaceNames(text, database) {
     // console.log(databaseLastNames);
 
     let textDatabaseIntersection = new Set([...textSet].filter(x => databaseLastNames.has(x)));
-    console.log("intersection", textDatabaseIntersection);
+    // console.log("intersection", textDatabaseIntersection);
 
     for(let politicianLastName of textDatabaseIntersection) {
         // console.log(politicianLastName);
@@ -115,7 +150,7 @@ function replaceNames(text, database) {
                 // BUG with exceeding stack
                 for (let k=0; k < name_variants.length; k++) {
                     $("*").replaceText(name_variants[k], identificationSpan);
-                    console.log("a");
+                    // console.log("a");
                 }
                 
                 let politicianFullName = `${firstName} ${lastName}`;

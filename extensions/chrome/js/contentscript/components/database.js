@@ -1,10 +1,10 @@
 function getDatabase() {
-    // setDatabase();
     chrome.storage.sync.get(['database'], function(element) {
         let database = element['database'];
         // console.log(database);
         if (!database) {
-            console.log('set db');
+            // console.log('set db, on wiki');
+            chrome.storage.sync.set({activeOptions: 'on-wiki'});            
             setDatabase();
         }
     });
