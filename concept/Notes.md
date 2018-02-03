@@ -49,6 +49,11 @@ To use a trie for full text search indexing.
 
 
 ## Future
+
+To replace he/she from the page with it. Have option to turn it off.
+
+---
+
 To put it on the blockchain.
 
 The advantages: a freed database.
@@ -76,5 +81,3 @@ Opinions
 
 
 ## TODOs
-
-Edit from search for admins.
