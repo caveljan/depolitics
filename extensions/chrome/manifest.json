@@ -2,7 +2,7 @@
     "manifest_version" : 2,
     "name" : "depolitics",
     "short_name" : "depolitics",
-    "description" : "Replace names of politicians from the web page with an 8-character Identification String (e.g. yttpc2i7) as generated on depolitics.org",
+    "description" : "Replace the Names of politicians from the web page with an Identification String (e.g. yttpc2i7) as generated on depolitics.org",
     "version" : "1.0",
     "author": "caveljan",
 
