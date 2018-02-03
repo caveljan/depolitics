@@ -1,33 +1,23 @@
-// Get the options from chrome.storage and call main with options as parameter
-// setTimeout(function(){
 getDatabase();
-// console.log('got database');
-// }, 5000);
 
 
 chrome.storage.sync.get(['activeOptions', 'database'], function(element) {
+    let database = element['database'];
     let options = {};
-    let activeOptions = element['activeOptions'];
-    let database = element['database']; 
+    options['activeOptions'] = element['activeOptions'];
 
-    options['activeOptions'] = activeOptions;
-    _main(options, database);
+    main(database, options);
 });
 
 
-function _main(options, database) {
+function main(database, options) {
+    let onWikipedia = /wikipedia.org/.test(document.location.href);
 
-    if (/wikipedia/.test(document.location.href)) {
-        var isWiki = true;
-    } else {
-        var isWiki = false;
+    if (options['activeOptions'] == "on-wiki" && onWikipedia) {
+        replaceText(database);
     }
 
-    if (options['activeOptions'] == "on-wiki" && isWiki) {
+    if (options['activeOptions'] == "on-site") {
         replaceText(database);
-        // replaceText(extractText(), database);
-    } else if (options['activeOptions'] == "on-site") {
-        replaceText(database);
-        // replaceText(extractText(), database);
     }
 }
