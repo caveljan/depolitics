@@ -23,10 +23,10 @@ function _main(options, database) {
         var isWiki = false;
     }
 
-    if (options['activeOptions'] == "onWiki" && isWiki) {
+    if (options['activeOptions'] == "on-wiki" && isWiki) {
         replaceText(database);
         // replaceText(extractText(), database);
-    } else if (options['activeOptions'] == "onSite") {
+    } else if (options['activeOptions'] == "on-site") {
         replaceText(database);
         // replaceText(extractText(), database);
     }

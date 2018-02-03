@@ -14,13 +14,12 @@ chrome.storage.sync.get(['activeOptions'], function(element) {
 
 
 function save_options () {
-    var activeOptionsForm = document.querySelector('input[name="activeOptionsForm"]:checked').value;
+    var activeOptionsForm = document.querySelector('input[name="active-options-form"]:checked').value;
 
     chrome.storage.sync.set({
         activeOptions: activeOptionsForm,
     }, function() {
-        var status = document.getElementById('status-save');
-        status.textContent = 'Options are saved.';
+        setMessage("Options are saved.")
         setTimeout(function() {
             status.textContent = '';
         }, 750);
@@ -31,6 +30,7 @@ function save_options () {
         document.getElementById(activeOptions).setAttribute("checked", "checked");
     });
 }
+
 
 document.getElementById('btn-save').addEventListener('click', function(ev) {
     save_options();
@@ -42,10 +42,9 @@ document.getElementById('btn-save').addEventListener('click', function(ev) {
 
 function default_options () {
     chrome.storage.sync.set({
-        activeOptions: 'onWiki',
+        activeOptions: 'on-wiki',
     }, function() {
-        var status = document.getElementById('status-default');
-        status.textContent = 'Options are default.';
+        setMessage("Options are default.")
         setTimeout(function() {
             status.textContent = '';
         }, 750);
@@ -57,9 +56,26 @@ function default_options () {
     });
 }
 
-document.getElementById('btn-reset').addEventListener('click', () => {
+
+document.getElementById('btn-reset').addEventListener("click", () => {
     default_options();
     setTimeout(function() {
         location.reload();
     }, 750);
 });
+
+
+document.getElementById('btn-update-database').addEventListener("click", () => {
+    // console.log("A");
+    setMessage("Database has been updated.")
+    setDatabase();
+    setTimeout(function() {
+        location.reload();
+    }, 750);
+})
+
+
+function setMessage(status) {
+    var message = document.getElementById('status-message');
+    message.textContent = status;
+}

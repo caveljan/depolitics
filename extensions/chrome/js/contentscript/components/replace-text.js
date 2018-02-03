@@ -132,7 +132,6 @@ function replaceNames(text, database) {
 }
 
 
-
 function setEventsListeners() {
     let depoliticsIsSpans = document.getElementsByClassName("depolitics-is");
 
@@ -151,6 +150,8 @@ function setEventsListeners() {
 
     for (let i = 0; i < depoliticsIdentitySpans.length; i++) {
         depoliticsIdentitySpans[i].addEventListener("click", (event) => {
+            event.preventDefault();
+            
             depoliticsIdentitySpans[i].children[0].style.display = "none";
             depoliticsIdentitySpans[i].children[1].style.display = "block";
             let politicianName = depoliticsIdentitySpans[i].parentElement.children[0].children[0].href
