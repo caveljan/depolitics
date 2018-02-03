@@ -16,7 +16,7 @@ The first step towards a politics of no one is to make the Name irrelevant.
 
 [depolitics.org](https://depolitics.org) allows one to check the names already entered into the database and to suggest new entries of politicians in need of a depolitical IS, an Identification String (e.g. from "George Washington" to "sflf6ctg").
 
-Using the browser extension, [Chrome](https://chrome.google.com/webstore/detail/depolitics/inninfkbddlmdijajpaodkemfimonneg), replaces the politician names read on the web page with the Identification String in the database.
+The browser extension, [Chrome](https://chrome.google.com/webstore/detail/depolitics/inninfkbddlmdijajpaodkemfimonneg), replaces the politician names read on the web page with the Identification String in the database.
 
 
 ## In Use
