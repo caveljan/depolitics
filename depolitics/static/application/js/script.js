@@ -10,6 +10,7 @@ copyCryptosOnClick();
 
 ajaxAddForm();
 ajaxSearchForm()
+ajaxEditForm()
 
 
 
@@ -519,7 +520,7 @@ function ajaxSearchForm() {
         identificationString = inputSearchString.value;
         inputSearchString.value = "";
         searchFound.innerHTML = `<p>The Identification String
-                                    <span class="input-id-string">${identificationString}</span>
+                                    <span class="input-id-string" id="input-searched-string">${identificationString}</span>
                                  is assigned to the politician
                                  <span id="close-search-response" class="input-close-result">×</span></p>`;
         searchResponse.style.display = "block";
@@ -539,6 +540,48 @@ function ajaxSearchForm() {
 }
 
 
+function ajaxEditForm() {
+    let inputEditSubmit = document.getElementById("input-edit-submit");
+
+    if (inputEditSubmit) {
+        inputEditSubmit.addEventListener("click", event => {
+            event.preventDefault();
+            makeAjaxCall();
+        })
+    }
+
+
+    function makeAjaxCall() {
+        let xhr = new XMLHttpRequest();
+        let url = "/edit/";
+
+        let identificationString = document.getElementById("input-searched-string").innerText;
+        let firstName = document.getElementById("search-first-name").innerText;
+        let lastName = document.getElementById("search-last-name").innerText;
+        let nameVariants = document.getElementById("search-name-variants").innerText;
+        let currentFunction = document.getElementById("search-current-function").innerText;
+        let previousFunctions = document.getElementById("search-previous-functions").innerText;
+        let csrfmiddlewaretoken = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
+
+        let parameters = `identification_string=${identificationString}&first_name=${firstName}&last_name=${lastName}&name_variants=${nameVariants}&current_function=${currentFunction}&previous_functions=${previousFunctions}&csrfmiddlewaretoken=${csrfmiddlewaretoken}`;
+
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhr.onreadystatechange = function() {
+            if(xhr.readyState == 4 && xhr.status == 200) {
+                let data = JSON.parse(xhr.responseText);
+                if (data["edit"] == 1) {
+                    handleResponse(data);
+                }
+            }
+        }
+        xhr.send(parameters);
+    }
+
+    function handleResponse(data) {
+        console.log(data);
+    }
+}
 
 ///////////////////
 // AJAX with jQuery
