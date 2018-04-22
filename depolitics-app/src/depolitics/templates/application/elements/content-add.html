@@ -1,0 +1,71 @@
+<div class="content content-add" id="content-add">
+    <form id="add-form">
+        {% csrf_token %}
+        <div class="input-group">
+            <input 
+                type="text"
+                name="first_name"
+                placeholder="first Name*"
+                id="input-first-name"
+                tabindex="1"
+                autofocus
+                required
+            >       
+        </div>
+
+        <div class="input-group">
+            <input
+                type="text"
+                name="last_name"
+                placeholder="last Name*"
+                id="input-last-name"
+                tabindex="1"
+                required
+            >
+        </div>
+
+        <div class="input-group">                    
+            <textarea 
+                rows="1" 
+                name="name_variants" 
+                placeholder="name variants, comma separated" 
+                id="input-name-variants"
+                tabindex="1"></textarea>
+        </div>
+
+        <div class="input-group">                    
+            <input type="text" 
+                name="current_function" 
+                placeholder="current political function*" 
+                id="input-current-function"
+                tabindex="1" 
+                required
+            >
+        </div>
+
+        <div class="input-group">                    
+            <textarea 
+                rows="1" 
+                name="previous_functions"
+                placeholder="previous political functions, comma separated"
+                id="input-previous-functions"
+                tabindex="1"></textarea>
+        </div>
+
+        <div class="input-group">   
+            <button
+                class="button"
+                type="submit"
+                value="OK"
+                id="input-add-submit"
+                tabindex="1">add
+            </button>
+        </div>
+
+        <div class="input-group">
+            <div class="input-message">
+                <p id="text-id-string"></p>
+            </div>
+        </div>     
+    </form>    
+</div>
