@@ -83,11 +83,17 @@ DATABASES = {
     #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     # }
     'default': {
-        'ENGINE': secret_DB_ENGINE,
-        'NAME': secret_DB_NAME,
-        'USER': secret_DB_USER,
-        'PASSWORD': secret_DB_PASSWORD,
-        'PORT': secret_DB_PORT
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'depolitics_db',
+        'PORT': 5432,
+
+        # 'ENGINE': secret_DB_ENGINE,
+        # 'NAME': secret_DB_NAME,
+        # 'USER': secret_DB_USER,
+        # 'PASSWORD': secret_DB_PASSWORD,
+        # 'PORT': secret_DB_PORT
     }
 }
 
