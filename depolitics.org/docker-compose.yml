@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8000:8000"
+      - 80
+      - 443
+    volumes:
+      - ./src:/src
+      - ./config/nginx:/etc/nginx/conf.d
+      - /src/static:/static
+    environment:
+      DEBUG: 'true'
+      VIRTUAL_HOST: depolitics.org
+      LETSENCRYPT_HOST: depolitics.org
+      LETSENCRYPT_EMAIL: caveljan@gmail.com
+    depends_on:
+      - web
+
+  web:
+    build: .
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && gunicorn depolitics.wsgi -b 0.0.0.0:8000"
+    depends_on:
+      - db
+    volumes:
+      - ./src:/src
+      - /src/static:/static
+    environment:
+      DEBUG: 'true'
+      VIRTUAL_HOST: depolitics.org
+      LETSENCRYPT_HOST: depolitics.org
+      LETSENCRYPT_EMAIL: caveljan@gmail.com
+    expose:
+      - "8000"
+
+  db:
+    image: postgres:latest
+    expose:
+      - 5432
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
