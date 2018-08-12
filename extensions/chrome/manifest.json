@@ -3,7 +3,7 @@
     "name" : "depolitics",
     "short_name" : "depolitics",
     "description" : "Replace the Names of politicians from the web page with an Identification String (e.g. yttpc2i7) as generated on depolitics.org",
-    "version" : "1.0.1",
+    "version" : "1.0.2",
     "author": "caveljan",
 
     "browser_action" : {
