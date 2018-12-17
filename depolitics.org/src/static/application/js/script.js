@@ -2,11 +2,9 @@
 // Function Calls
 setActiveTab();
 clearSearchedResponse();
-expandGiftDrawer();
 disableSearchIfEmptyString();
 disableAddIfEmptyString();
 noHoverDisabledButton()
-copyCryptosOnClick();
 
 ajaxAddForm();
 ajaxSearchForm()
@@ -20,12 +18,10 @@ function setActiveTab() {
     let tabAbout = document.getElementById("tab-about");
     let tabAdd = document.getElementById("tab-add");
     let tabSearch = document.getElementById("tab-search");
-    let tabGift = document.getElementById("tab-gift");
 
     let contentAbout = document.getElementById("content-about");
     let contentAdd = document.getElementById("content-add");
     let contentSearch = document.getElementById("content-search");
-    let contentGift = document.getElementById("content-gift");
 
     let linkAdd = document.getElementById("link-add");
     let linkSearch = document.getElementById("link-search");
@@ -47,7 +43,6 @@ function setActiveTab() {
         contentAbout.style.display = "block";
         contentAdd.style.display = "none";
         contentSearch.style.display = "none";
-        contentGift.style.display = "none";
     })
 
     tabAdd.addEventListener("click", function() {
@@ -56,7 +51,6 @@ function setActiveTab() {
         contentAdd.style.display = "block";
         contentAbout.style.display = "none";
         contentSearch.style.display = "none";
-        contentGift.style.display = "none";
     })
 
     tabSearch.addEventListener("click", function() {
@@ -65,16 +59,6 @@ function setActiveTab() {
         contentSearch.style.display = "block";
         contentAbout.style.display = "none";
         contentAdd.style.display = "none";
-        contentGift.style.display = "none";
-    })
-
-    tabGift.addEventListener("click", function() {
-        setActiveClassToTab(this);
-
-        contentGift.style.display = "block";
-        contentAbout.style.display = "none";
-        contentAdd.style.display = "none";
-        contentSearch.style.display = "none";
     })
 
 
@@ -83,7 +67,7 @@ function setActiveTab() {
 
         contentAdd.style.display = "block";
         contentAbout.style.display = "none";
-        contentSearch.style.display = "none"; 
+        contentSearch.style.display = "none";
     })
 
     linkSearch.addEventListener("click", () => {
@@ -108,26 +92,6 @@ function clearSearchedResponse() {
 }
 
 
-function expandGiftDrawer() {
-    let giftCryptoExpand = document.getElementById("gift-crypto-expand");
-    let giftCardCrypto = document.getElementById("gift-card-crypto");
-    let giftCardDrawer = document.getElementById("gift-card-drawer");
-
-    giftCryptoExpand.addEventListener("click", () => {
-        if (giftCardCrypto.style.height == "530px") {
-            giftCryptoExpand.innerHTML = "&#9660;";
-            giftCardCrypto.style.height = "200px";
-            giftCardDrawer.style.display = "none";
-        } else {
-            giftCryptoExpand.innerHTML = "&#9650;";
-            giftCardCrypto.style.height = "530px";
-            giftCardDrawer.style.display = "block";
-            // window.scrollTo(0,document.body.scrollHeight);
-        }
-    });
-}
-
-
 function setOpacity(button) {
 
     button.style.opacity = "0.3";
@@ -140,8 +104,8 @@ function disableAddIfEmptyString() {
     let inputCurrentFunction = document.getElementById("input-current-function");
     let inputAddSubmit = document.getElementById("input-add-submit");
 
-    if (inputFirstName.value == "" 
-        || inputLastName.value == "" 
+    if (inputFirstName.value == ""
+        || inputLastName.value == ""
         || inputCurrentFunction.value == "") {
             setOpacity(inputAddSubmit)
     }
@@ -238,56 +202,6 @@ function noHoverDisabledButton() {
 }
 
 
-function copyCryptosOnClick() {
-    function copyBtcAdressOnClick() {
-        let btc = document.getElementById("btc-address");
-        let address = "1CKoEnMU3Hy1UiWfJVBTruVSmrLvhDkXd6"
-        copyCryptoAddress(btc, address)
-    }
-
-    function copyEthAdressOnClick() {
-        let eth = document.getElementById("eth-address");
-        let address = "0x91936fc5A7e13ae96273E371fD3407B0F3ABc553"
-        copyCryptoAddress(eth, address)
-    }
-
-    function copyBchAdressOnClick() {
-        let bch = document.getElementById("bch-address");
-        let address = "qrlar2grfap9n86gfrm6z69yw56ezv35zyts7ufxjv"
-        copyCryptoAddress(bch, address)
-    }
-
-    function copyCryptoAddress(crypto, address) {
-        crypto.addEventListener("click", () => {
-            let range = document.createRange();
-            range.selectNode(crypto);
-            let selection = window.getSelection()
-            selection.removeAllRanges();
-            selection.addRange(range);
-
-            try {  
-                if (crypto.innerHTML == address) {
-                    document.execCommand('copy');
-                }
-                crypto.innerHTML = `<span class="address-copy">address<br>copied</span>`;
-                setTimeout(function() {
-                    crypto.innerText = address;
-                }, 2000);
-            } catch(err) {
-                crypto.innerHTML = `<span class="address-copy">address<br>couldn't be copied</span>`;
-                setTimeout(function() {
-                    crypto.innerText = address;
-                }, 2000);
-            }
-            window.getSelection().removeAllRanges(); 
-        });
-    }
-
-    copyBtcAdressOnClick();
-    copyEthAdressOnClick();
-    copyBchAdressOnClick();
-}
-
 
 
 // AJAX
@@ -318,7 +232,7 @@ function ajaxAddForm() {
             if(xhr.readyState == 4 && xhr.status == 200) {
                 let data = JSON.parse(xhr.responseText);
                 if (data["not filled"] == 1) {
-                    handleNotFilled(data);                    
+                    handleNotFilled(data);
                 } else if (data["exists"] != 1) {
                     handleResponse(data);
                 } else {
@@ -394,7 +308,7 @@ function ajaxAddForm() {
 
         let identificationString = data["identification_string"][0]["identification_string"];
         let name = strFirstName + " " + strLastName;
-        let stringContent = `The politician ${name} is already in the database with the 
+        let stringContent = `The politician ${name} is already in the database with the
                              Identification String <span class="input-id-string">${identificationString}</span>.
                              <span id="close-add-exists" class="input-close-result">×</span>`;
         textIdString.innerHTML = stringContent;
@@ -481,8 +395,8 @@ function ajaxSearchForm() {
 
         identificationString = data["identification_string"];
         if (identificationString != "") {
-            notFoundString = `<p>The Identification String 
-                                 <span class="input-id-string">${identificationString}</span> 
+            notFoundString = `<p>The Identification String
+                                 <span class="input-id-string">${identificationString}</span>
                              is not assigned, yet.
                              <span id="close-search-not-found" class="input-close-result">×</span></p>`;
         } else {
@@ -582,73 +496,3 @@ function ajaxEditForm() {
         console.log(data);
     }
 }
-
-///////////////////
-// AJAX with jQuery
-
-// $(document).on("submit", "#add-form", function(e) {
-//     e.preventDefault();
-
-//     $.ajax({
-//         type: "POST",
-//         url: "/add/",
-//         data: {
-//             first_name: $("#input-first-name").val(),
-//             last_name: $("#input-last-name").val(),
-//             name_variants: $("#input-name-variants").val(),
-//             current_function: $("#input-current-function").val(),
-//             previous_functions: $("#input-previous-functions").val(),
-//             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-//         },
-//         success: function(response){
-//             let data = response;
-//             console.log(data);
-//             let idString = data['identification_string'][0]['identification_string'];
-//             let name = $("#input-first-name").val() + " " + $("#input-last-name").val()
-//             let stringContent = 'the Identification String for the politician ' +
-//                                  name + ' is ' + 
-//                                  '<span class="input-id-string">' + idString + '</span>';
-            
-//             $("#input-first-name").val('');
-//             $("#input-last-name").val('');
-//             $("#input-name-variants").val('');
-//             $("#input-current-function").val('');
-//             $("#input-previous-functions").val('');
-//             $("#text-id-string")[0].innerHTML = stringContent;
-
-//             // $("#input-id-string")[0].textContent = "success";
-//         }
-//     });
-// });
-
-
-// $(document).on("submit", "#search-form", function(e) {
-//     e.preventDefault();
-
-//     $.ajax({
-//         type: "POST",
-//         url: "/search/",
-//         data: {
-//             identification_string: $("#input-search-string").val(),
-//             csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val()
-//         },
-//         success: function(response){
-//             let data = response;
-//             let politician = data['politician'][0];
-//             let firstName = politician['first_name'];
-//             let lastName = politician['last_name'];
-//             let nameVariants = politician['name_variants']
-//             let currentFunction = politician['current_function']
-//             let previousFunctions = politician['previous_functions']
-//             console.log(firstName);
-//             console.log(lastName);
-
-//             $("#search-response").css("display", "block");
-//             $("#search-first-name").text(firstName);
-//             $("#search-last-name").text(lastName);
-//             $("#search-name-variants").text(nameVariants);
-//             $("#search-current-function").text(currentFunction);
-//             $("#search-previous-functions").text(previousFunctions);
-//         }
-//     });
-// });
