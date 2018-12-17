@@ -93,4 +93,5 @@ Temporary Items
 __pycache__
 depolitics/depolitics/settings_secret.py
 
+# vscode
 .vscode
