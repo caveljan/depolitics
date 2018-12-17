@@ -1,3 +1,19 @@
+<p align="center">
+    <img src="https://raw.githubusercontent.com/caveljan/depolitics/master/about/identity/depolitics-black.png" height="200px">
+</p>
+
+
+<p align="center">
+    <a href="https://chrome.google.com/webstore/detail/depolitics/inninfkbddlmdijajpaodkemfimonneg">
+        <img src="https://img.shields.io/badge/chrome-v1.0.1-blue.svg?colorB=004F91&style=for-the-badge" alt="Chrome Version">
+    </a>
+    <a href="https://github.com/caveljan/depolitics/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/license-GPL%E2%80%933.0-blue.svg?colorB=492356&style=for-the-badge" alt="License">
+    </a>
+</p>
+
+
+
 # Depolitics
 
 Replace the Names of politicians with random strings of characters as generated on [depolitics.org](https://depolitics.org).
@@ -21,10 +37,10 @@ The browser extension, [Chrome](https://chrome.google.com/webstore/detail/depoli
 
 ## In Use
 
-![George Washington on Wikipedia](https://github.com/caveljan/depolitics/blob/master/extensions/chrome/chrome-dev-files/screenshots/ss-sflf6ctg.png)
+![George Washington on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-sflf6ctg.png)
 
-![John Adams on Wikipedia](https://github.com/caveljan/depolitics/blob/master/extensions/chrome/chrome-dev-files/screenshots/ss-70wx0y5q.png)
+![John Adams on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-70wx0y5q.png)
 
-![Thomas Jefferson on Wikipedia](https://github.com/caveljan/depolitics/blob/master/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu.png)
+![Thomas Jefferson on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu.png)
 
-![Thomas Jefferson on Wikipedia, hovered](https://github.com/caveljan/depolitics/blob/master/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu-hover.png)
+![Thomas Jefferson on Wikipedia, hovered](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu-hover.png)
