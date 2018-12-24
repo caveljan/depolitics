@@ -193,7 +193,7 @@ SECRET_KEY = 'k#vh((3t4*iekf%*c-c**yxrkew#3&^0ytyu*5)th9n=2h%x=f'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['.depolitics.org']
+ALLOWED_HOSTS = ['.depolitics.org', 'web']
 
 
 # Application definition
