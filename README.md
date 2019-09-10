@@ -7,8 +7,8 @@
     <a href="https://chrome.google.com/webstore/detail/depolitics/inninfkbddlmdijajpaodkemfimonneg">
         <img src="https://img.shields.io/badge/chrome-v1.0.1-blue.svg?colorB=004F91&style=for-the-badge" alt="Chrome Version">
     </a>
-    <a href="https://github.com/caveljan/depolitics/blob/master/LICENSE">
-        <img src="https://img.shields.io/badge/license-GPL%E2%80%933.0-blue.svg?colorB=492356&style=for-the-badge" alt="License">
+    <a target="_blank" href="https://github.com/caveljan/depolitics/blob/master/LICENSE">
+        <img src="https://img.shields.io/badge/license-MIT-blue.svg?colorB=1380C3&style=for-the-badge" alt="License: MIT">
     </a>
 </p>
 
