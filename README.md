@@ -37,10 +37,10 @@ The browser extension, [Chrome](https://chrome.google.com/webstore/detail/depoli
 
 ## In Use
 
-![George Washington on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-sflf6ctg.png)
+![George Washington on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/packages/extensions/chrome/chrome-dev-files/screenshots/ss-sflf6ctg.png)
 
-![John Adams on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-70wx0y5q.png)
+![John Adams on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/packages/extensions/chrome/chrome-dev-files/screenshots/ss-70wx0y5q.png)
 
-![Thomas Jefferson on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu.png)
+![Thomas Jefferson on Wikipedia](https://raw.githubusercontent.com/caveljan/depolitics/master/packages/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu.png)
 
-![Thomas Jefferson on Wikipedia, hovered](https://raw.githubusercontent.com/caveljan/depolitics/master/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu-hover.png)
+![Thomas Jefferson on Wikipedia, hovered](https://raw.githubusercontent.com/caveljan/depolitics/master/packages/extensions/chrome/chrome-dev-files/screenshots/ss-xfauvtwu-hover.png)
