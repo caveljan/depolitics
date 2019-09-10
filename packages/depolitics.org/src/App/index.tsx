@@ -4,7 +4,7 @@ import {
 } from './styled';
 
 import Root from './Root';
-import store from './store';
+import store from '../modules/services/state/store';
 
 
 

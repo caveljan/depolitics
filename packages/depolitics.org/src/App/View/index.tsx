@@ -1,28 +1,28 @@
 import React, {
-    useEffect,
-    useCallback,
+    // useEffect,
+    // useCallback,
 } from 'react';
 import { connect } from 'react-redux';
 import { StyledView } from './styled';
-import {
-    handleView,
-} from './logic';
+// import {
+//     handleView,
+// } from './logic';
 
 
 
 interface ViewProperties {
-
+    [key: string]: any;
 }
 
 
 const View: React.FC<ViewProperties> = (properties) => {
-    const {
+    // const {
 
-    } = properties;
+    // } = properties;
 
     return (
         <StyledView>
-
+            depolitics
         </StyledView>
     );
 }

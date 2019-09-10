@@ -1,4 +1,4 @@
-import environment from '../environment';
+import environment from '../../utilities/environment';
 
 import storeProduction from './store.production';
 import storeDevelopment from './store.development';
