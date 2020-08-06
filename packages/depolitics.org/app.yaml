@@ -1,0 +1,21 @@
+runtime: nodejs10
+
+handlers:
+  - url: /favicon
+    static_dir: build/favicon
+    secure: always
+    http_headers:
+      Access-Control-Allow-Origin: '*'
+
+  - url: /static
+    static_dir: build/static
+    secure: always
+    http_headers:
+      Access-Control-Allow-Origin: '*'
+
+  - url: .*
+    static_files: build/index.html
+    upload: build/index.html
+    secure: always
+    http_headers:
+      Access-Control-Allow-Origin: '*'
