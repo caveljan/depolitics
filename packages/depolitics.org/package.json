@@ -2,16 +2,16 @@
     "name": "depolitics.org",
     "version": "0.1.0",
     "description": "depolitics.org application",
-    "author": "Jan Cavel <mail@caveljan.com> (https://caveljan.com)",
+    "author": "ly3xqhl8g9 <ly3xqhl8g9@plurid.com> (https://plurid.com)",
     "private": true,
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/caveljan/depolitics"
+        "url": "https://github.com/ly3xqhl8g9/depolitics"
     },
     "bugs": {
-        "email": "mail@caveljan.com",
-        "url": "https://github.com/caveljan/depolitics/issues"
+        "email": "ly3xqhl8g9@plurid.com",
+        "url": "https://github.com/ly3xqhl8g9/depolitics/issues"
     },
     "scripts": {
         "prestart": "npm install -g serve",
